@@ -1,0 +1,242 @@
+<!-- Auto-updated: integrated navigation and redirects -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartBudget - Budget Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+      background: linear-gradient(135deg, #6c5ce7 0%, #81ecec 100%) fixed;
+      color: #222;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #0f476a;
+      color: #fff;
+      text-align: center;
+      padding: 1.2rem 0 1.2rem 0;
+      font-size: 1.5rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 8px rgba(46,125,50,0.07);
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1000px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      border-bottom: 2px solid #2d89ef;
+      padding-bottom: 0.5rem;
+      color: #333;
+    }
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    input, select {
+      padding: 0.6rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      flex: 1;
+    }
+
+    button {
+      background-color: #2d89ef;
+      color: white;
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1b65c2;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 0.8rem;
+    }
+
+    th {
+      background-color: #f0f0f0;
+    }
+
+    .summary {
+      display: flex;
+      justify-content: space-around;
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .summary div {
+      background-color: #eef5ff;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    .progress {
+      background-color: #eee;
+      border-radius: 20px;
+      height: 25px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .progress-bar {
+      background-color: #2d89ef;
+      height: 100%;
+      width: 0%;
+      color: white;
+      text-align: center;
+      line-height: 25px;
+      border-radius: 20px;
+      transition: width 0.5s;
+    }
+
+    .back-link {
+      text-decoration: none;
+      color: #2d89ef;
+      display: inline-block;
+      margin-top: 20px;
+    }
+
+  </style>
+</head>
+<body>
+  <header>SmartBudget Dashboard</header>
+
+  <div class="container">
+    <h2>Add Income / Expenses</h2>
+    <form action="Project 1/landing.html" id="budgetForm">
+      <select id="type">
+        <option value="income">Income</option>
+        <option value="expense">Expense</option>
+      </select>
+      <input type="text" id="category" placeholder="Category (e.g. Food, Salary)" required />
+      <input type="number" id="amount" placeholder="Amount" required />
+      <button type="submit">Add</button>
+    </form>
+
+    <h2>Budget Summary</h2>
+    <div class="summary">
+      <div>
+        <h3>Total Income</h3>
+        <p id="totalIncome">$0</p>
+      </div>
+      <div>
+        <h3>Total Expenses</h3>
+        <p id="totalExpenses">$0</p>
+      </div>
+      <div>
+        <h3>Balance</h3>
+        <p id="balance">$0</p>
+      </div>
+    </div>
+
+    <div class="progress">
+      <div class="progress-bar" id="progressBar">0%</div>
+    </div>
+
+    <h2>Transaction Table</h2>
+    <table id="transactionsTable">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Category</th>
+          <th>Amount</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <a href="index.html" class="back-link">← Back to Home</a>
+  </div>
+
+  <script>
+    const form = document.getElementById('budgetForm');
+    const transactionsTable = document.getElementById('transactionsTable').querySelector('tbody');
+    const totalIncome = document.getElementById('totalIncome');
+    const totalExpenses = document.getElementById('totalExpenses');
+    const balance = document.getElementById('balance');
+    const progressBar = document.getElementById('progressBar');
+
+    let income = 0;
+    let expenses = 0;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const type = document.getElementById('type').value;
+      const category = document.getElementById('category').value;
+      const amount = parseFloat(document.getElementById('amount').value);
+
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${type}</td>
+        <td>${category}</td>
+        <td>$${amount.toFixed(2)}</td>
+        <td><button onclick="removeRow(this)">Delete</button></td>
+      `;
+      transactionsTable.appendChild(row);
+
+      if (type === 'income') income += amount;
+      else expenses += amount;
+
+      updateSummary();
+      form.reset();
+    });
+
+    function removeRow(btn) {
+      const row = btn.parentElement.parentElement;
+      const type = row.children[0].textContent;
+      const amount = parseFloat(row.children[2].textContent.replace('$', ''));
+
+      if (type === 'income') income -= amount;
+      else expenses -= amount;
+
+      row.remove();
+      updateSummary();
+    }
+
+    function updateSummary() {
+      const currentBalance = income - expenses;
+      const usedBudget = (expenses / income) * 100;
+
+      totalIncome.textContent = `$${income.toFixed(2)}`;
+      totalExpenses.textContent = `$${expenses.toFixed(2)}`;
+      balance.textContent = `$${currentBalance.toFixed(2)}`;
+
+      progressBar.style.width = `${usedBudget.toFixed(0)}%`;
+      progressBar.textContent = `${usedBudget.toFixed(0)}%`;
+    }
+  </script>
+</body>
+</html>

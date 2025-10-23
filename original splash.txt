@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smart Budget — Splash</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    // simple splash -> welcome after 2.2s (or skip if already logged in)
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        const current = localStorage.getItem('currentUser');
+        if (current) {
+          // already logged in -> go straight to dashboard
+          window.location.href = 'dashboard.html';
+          return;
+        }
+      } catch(e){}
+      setTimeout(()=> location.href='welcome.html', 2200);
+    });
+  </script>
+</head>
+<body class="splash-body">
+  <div class="splash-card">
+    <!-- Inline SVG logo -->
+    <svg width="140" height="140" viewBox="0 0 24 24" aria-hidden="true">
+      <rect width="24" height="24" rx="5" fill="#2b7a78"></rect>
+      <path d="M6 13h5v5" stroke="#fff" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+      <path d="M6 17l3-6 5 2 4-5" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <h1>Smart Budget</h1>
+    <p class="muted">Helping you lower expenses • save better • track spending</p>
+  </div>
+</body>
+</html>

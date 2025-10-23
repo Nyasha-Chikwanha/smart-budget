@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="480" viewBox="0 0 600 480">
+  <rect width="600" height="480" rx="20" fill="#081022"/>
+  <g transform="translate(40,40)" fill="#dff0ff">
+    <text x="0" y="28" font-size="22">Welcome to Smart Budget</text>
+    <circle cx="520" cy="60" r="28" fill="#6c5ce7"/>
+  </g>
+</svg>

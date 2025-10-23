@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smart Budget — Reports</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #6c5ce7 0%, #81ecec 100%) fixed;
+      color: #222;
+      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #0f476a;
+      color: #fff;
+      text-align: center;
+      padding: 1rem 0;
+      font-size: 1.5rem;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: rgba(255,255,255,0.95);
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #4834d4;
+      margin-top: 2rem;
+      border-bottom: 2px solid #4834d4;
+      padding-bottom: 0.3rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.7rem;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    th {
+      background: #4834d4;
+      color: #fff;
+    }
+
+    tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+
+    .status {
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      display: inline-block;
+    }
+
+    .status.reached {
+      background: #81ecec;
+      color: #055;
+    }
+
+    .status.pending {
+      background: #ffeaa7;
+      color: #6d4c00;
+    }
+
+    .status.failed {
+      background: #fab1a0;
+      color: #6b0b00;
+    }
+
+    .summary {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border-radius: 1rem;
+      background: #f1f2f6;
+    }
+
+    .summary p {
+      font-size: 1.1rem;
+      margin: 0.3rem 0;
+    }
+
+    .back-btn {
+      display: inline-block;
+      background: #4834d4;
+      color: #fff;
+      border: none;
+      border-radius: 2em;
+      padding: 0.8em 1.5em;
+      font-weight: 500;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 2rem;
+      text-decoration: none;
+    }
+
+    .back-btn:hover {
+      background: #341f97;
+    }
+
+    @media (max-width: 700px) {
+      table {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>📊 Smart Budget — Reports</header>
+
+  <main>
+    <section id="summarySection">
+      <h2>Overall Summary</h2>
+      <div class="summary" id="summaryStats">
+        <p>Total Income: $0</p>
+        <p>Total Expenses: $0</p>
+        <p>Remaining Balance: $0</p>
+      </div>
+    </section>
+
+    <section id="transactionsSection">
+      <h2>All Transactions</h2>
+      <table id="transactionsTable">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Entries inserted by JS -->
+        </tbody>
+      </table>
+    </section>
+
+    <section id="monthlySummarySection">
+      <h2>Monthly Summary</h2>
+      <table id="monthlySummaryTable">
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th>Total Income</th>
+            <th>Total Expenses</th>
+            <th>Money Saved</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Monthly summary inserted by JS -->
+        </tbody>
+      </table>
+      <div id="suggestionBox" style="margin-top:1.5em; padding:1em; background:#fffbe6; border-radius:1em; font-size:1.1em; color:#222; box-shadow:0 2px 8px #ffd70044;"></div>
+    </section>
+
+    <section id="goalSection">
+      <h2>Savings Goal Report</h2>
+      <table id="goalTable">
+        <thead>
+          <tr>
+            <th>Goal Name</th>
+            <th>Target Amount</th>
+            <th>Saved Amount</th>
+            <th>Deadline</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Goal inserted by JS -->
+        </tbody>
+      </table>
+    </section>
+
+    <a href="welcome.html" class="back-btn">⬅ Back to Dashboard</a>
+  </main>
+
+  <script>
+    // === LOAD TRANSACTIONS ===
+    const transactions = JSON.parse(localStorage.getItem('sb_transactions')) || [];
+    const tbody = document.querySelector('#transactionsTable tbody');
+    let today = new Date().toISOString().slice(0, 10);
+
+    // Add all transactions to the table (forever unless deleted)
+    transactions.forEach(t => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${t.date ? t.date : '-'}</td>
+        <td>${t.type.charAt(0).toUpperCase() + t.type.slice(1)}</td>
+        <td>${t.category || '-'}</td>
+        <td>$${parseFloat(t.amount).toFixed(2)}</td>
+        <td>${t.desc || ''}</td>
+      `;
+      tbody.appendChild(row);
+    });
+
+    // === SHOW SUMMARY (refreshes daily) ===
+    // Use a unique id for the summary
+    const summaryId = 'sb_summary_' + today;
+    let summary = JSON.parse(localStorage.getItem(summaryId));
+    if (!summary) {
+      // Calculate today's summary from today's transactions
+      let income = 0, expenses = 0;
+      transactions.forEach(t => {
+        if (t.date === today) {
+          if (t.type === 'income') income += parseFloat(t.amount);
+          else expenses += parseFloat(t.amount);
+        }
+      });
+      let balance = income - expenses;
+      summary = { income, expenses, balance };
+      localStorage.setItem(summaryId, JSON.stringify(summary));
+    }
+    document.getElementById('summaryStats').innerHTML = `
+      <p id="summary-id"><strong>Summary ID:</strong> ${summaryId}</p>
+      <p><strong>Total Income:</strong> $${summary.income.toFixed(2)}</p>
+      <p><strong>Total Expenses:</strong> $${summary.expenses.toFixed(2)}</p>
+      <p><strong>Remaining Balance:</strong> $${summary.balance.toFixed(2)}</p>
+    `;
+
+    // === MONTHLY SUMMARY & SUGGESTION ===
+    function getMonth(dateStr) {
+      const d = new Date(dateStr);
+      const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"];
+      return monthNames[d.getMonth()] + ' ' + d.getFullYear();
+    }
+    // Group transactions by month
+    const monthly = {};
+    transactions.forEach(t => {
+      if (!t.date) return;
+      const month = getMonth(t.date);
+      if (!monthly[month]) monthly[month] = {income:0,expenses:0};
+      if (t.type === 'income') monthly[month].income += parseFloat(t.amount);
+      else monthly[month].expenses += parseFloat(t.amount);
+    });
+    // Render monthly summary table
+    const monthlySummaryTbody = document.querySelector('#monthlySummaryTable tbody');
+    let lastMonth = null;
+    Object.entries(monthly).forEach(([month, vals]) => {
+      const saved = vals.income - vals.expenses;
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${month}</td>
+        <td>$${vals.income.toFixed(2)}</td>
+        <td>$${vals.expenses.toFixed(2)}</td>
+        <td>$${saved.toFixed(2)}</td>
+      `;
+      monthlySummaryTbody.appendChild(row);
+      lastMonth = {month, ...vals, saved};
+    });
+    // Suggestion area logic
+    const suggestionBox = document.getElementById('suggestionBox');
+    if (lastMonth) {
+      if (lastMonth.expenses > lastMonth.income) {
+        suggestionBox.textContent = `You spent more than you earned in ${lastMonth.month}. Consider reviewing your expenses and setting stricter budgets for categories where you overspent.`;
+      } else if (lastMonth.saved > 0) {
+        suggestionBox.textContent = `Congratulations! You saved $${lastMonth.saved.toFixed(2)} in ${lastMonth.month}. Keep up the efficient money management!`;
+      } else {
+        suggestionBox.textContent = `You broke even in ${lastMonth.month}. Try to save a little next month for better financial security.`;
+      }
+    } else {
+      suggestionBox.textContent = 'No monthly data available yet.';
+    }
+
+    // === LOAD GOAL ===
+    const goalData = JSON.parse(localStorage.getItem("savingsGoal"));
+    const goalTbody = document.querySelector("#goalTable tbody");
+
+    if (goalData) {
+      const progress = (goalData.savedAmount / goalData.goalAmount) * 100;
+      let status = "Pending";
+      if (progress >= 100) status = "Reached";
+      else if (new Date(goalData.goalDate) < new Date() && progress < 100) status = "Failed";
+
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${goalData.goalName}</td>
+        <td>$${goalData.goalAmount}</td>
+        <td>$${goalData.savedAmount}</td>
+        <td>${goalData.goalDate}</td>
+        <td><span class="status ${status.toLowerCase()}">${status}</span></td>
+      `;
+      goalTbody.appendChild(row);
+    } else {
+      goalTbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">No goal data available.</td></tr>`;
+    }
+  </script>
+</body>
+</html>

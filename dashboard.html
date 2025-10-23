@@ -1,0 +1,66 @@
+<!-- Auto-updated: integrated navigation and redirects -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard — Smart Budget</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar"><div class="logo">Smart Budget — Dashboard</div></header>
+  <main class="container">
+    <section class="card">
+      <h2 id="welcome">Welcome</h2>
+      <p id="emailDisplay" class="muted"></p>
+
+      <div class="grid">
+        <div class="feature">
+          <h3>Track Expenses</h3>
+          <p>Record expenses by category, view recent spending.</p>
+          <a class="button" href="Project 1/landing.html">Open</a>
+        </div>
+        <div class="feature">
+          <h3>Save Better</h3>
+          <p>Set savings goals and track progress.</p>
+          <a class="button" href="Project 1/landing.html">Open</a>
+        </div>
+        <div class="feature">
+          <h3>Lower Expenses</h3>
+          <p>Tips and suggestions to reduce costs.</p>
+          <a class="button" href="Project 1/landing.html">Open</a>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;">
+        <a class="button" href="Project 1/landing.html">Logout</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/auth.js"></script>
+  <script>
+    // ensure logged in
+    document.addEventListener('DOMContentLoaded', () => {
+      const current = getCurrentUser();
+      if (!current) {
+        // not logged in -> go to welcome
+        window.location.href = 'welcome.html';
+        return;
+      }
+      document.getElementById('welcome').textContent = 'Welcome, ' + current.name.split(' ')[0];
+      document.getElementById('emailDisplay').textContent = current.email;
+
+      document.getElementById('logoutBtn').addEventListener('click', ()=>{
+        logout();
+        window.location.href = 'welcome.html';
+      });
+
+      // placeholders for feature buttons
+      document.getElementById('goTrack').addEventListener('click', ()=> alert('Open Expense Tracker (not implemented in this demo).'));
+      document.getElementById('goSave').addEventListener('click', ()=> alert('Open Savings Goals (not implemented in this demo).'));
+      document.getElementById('goTips').addEventListener('click', ()=> alert('Open Tips & Advice (not implemented in this demo).'));
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <defs>
+    <linearGradient id="a" x1="0" x2="1"><stop offset="0" stop-color="#6c5ce7"/><stop offset="1" stop-color="#00b4d8"/></linearGradient>
+  </defs>
+  <rect width="1200" height="700" rx="30" fill="#081025"/>
+  <g transform="translate(80,60)">
+    <rect width="480" height="360" rx="18" fill="url(#a)" opacity="0.12"/>
+    <g transform="translate(40,30)">
+      <circle cx="360" cy="120" r="90" fill="#0b1a2a"/>
+      <rect x="260" y="70" width="180" height="30" rx="8" fill="#102435"/>
+      <rect x="260" y="110" width="120" height="26" rx="8" fill="#102435"/>
+      <rect x="260" y="150" width="200" height="26" rx="8" fill="#102435"/>
+    </g>
+    <g transform="translate(600,30)">
+      <rect width="420" height="420" rx="18" fill="#07101a" stroke="#0b1a2a"/>
+      <g transform="translate(40,40)" fill="#cfeaff" font-family="sans-serif">
+        <text x="0" y="30" font-size="22">Monthly Overview</text>
+      </g>
+    </g>
+  </g>
+</svg>

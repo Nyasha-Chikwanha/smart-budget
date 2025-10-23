@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smart Budget — Log in</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="landing.html" class="brand">
+        <img src="images/logo.svg" alt="logo" class="logo"/>
+        <span>Smart Budget</span>
+      </a>
+      <nav class="nav-links">
+        <a href="landing.html">Home</a>
+        <a href="signup.html" class="btn btn-outline">Sign up</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="auth-page">
+    <div class="container auth-inner">
+      <div class="auth-card">
+        <h1>Welcome back</h1>
+        <p>Log in to access your Smart Budget account.</p>
+        <form id="loginForm" method="post" action="#">
+          <label>Email
+            <input type="email" name="email" id="email" required placeholder="you@example.com">
+          </label>
+          <label>Password
+            <input type="password" name="password" id="password" required placeholder="Enter password">
+          </label>
+          <div id="loginError" style="color:#d32f2f; font-size:0.95em; display:none; margin-bottom:0.5em;"></div>
+          <button type="submit" class="btn btn-cta">Log in</button>
+          <p class="muted">Don't have an account? <a href="signup.html">Sign up</a></p>
+        </form>
+      </div>
+      <div class="auth-art">
+        <img src="images/login-graphic.svg" alt="login art"/>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer small">
+    <div class="container footer-inner">
+      <p>&copy; 2025 Smart Budget</p>
+    </div>
+  </footer>
+
+  <script>
+    // Simple login logic with localStorage for remembering details
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const errorDiv = document.getElementById('loginError');
+
+      // Demo: Only one valid user
+      if (email === "nchikwanha7@gmail.com" && password === "M0neypenny") {
+        localStorage.setItem('sb_user_email', email);
+        window.location.href = "welcome.html";
+      } else {
+        errorDiv.textContent = "UNKNOWN USER, PLEASE REGISTER";
+        errorDiv.style.display = "block";
+      }
+    });
+
+    // Autofill if details are remembered
+    window.addEventListener('DOMContentLoaded', function() {
+      const savedEmail = localStorage.getItem('sb_user_email');
+      if (savedEmail) {
+        document.getElementById('email').value = savedEmail;
+      }
+    });
+  </script>
+</body>
+</html>

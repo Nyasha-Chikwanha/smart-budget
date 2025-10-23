@@ -1,0 +1,389 @@
+<!-- Auto-updated: integrated navigation and redirects -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smart Budget — Welcome</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #6c5ce7 0%, #81ecec 100%) fixed;
+      color: #222;
+      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .topbar {
+      background: #0f476a;
+      color: #fff;
+      padding: 1.2rem 0 1.2rem 0;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 8px rgba(46,125,50,0.07);
+    }
+    .container {
+      max-width: 900px;
+      margin: 2.5rem auto 0 auto;
+      padding: 0 1.5rem 2rem 1.5rem;
+      background: rgba(255,255,255,0.92);
+      color: #222;
+      border-radius: 18px;
+      box-shadow: 0 6px 24px rgba(108,92,231,0.10);
+    }
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .user-greeting {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--accent);
+    }
+    .dashboard-header a {
+      color: var(--accent);
+      text-decoration: underline;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+    .quick-actions {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .quick-actions button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 2em;
+      padding: 0.7em 1.5em;
+      font-weight: 500;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(46,125,50,0.07);
+      transition: background 0.2s;
+    }
+    .quick-actions button:hover {
+      background: #4834d4;
+    }
+    .features-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .feature-card {
+      flex: 1 1 220px;
+      background: #f7f9ff;
+      border-radius: 1rem;
+      box-shadow: 0 2px 12px rgba(108,92,231,0.07);
+      padding: 1.2rem 1rem;
+      min-width: 220px;
+      text-align: center;
+      border-top: 4px solid var(--accent);
+      transition: box-shadow 0.2s;
+      color: #222;
+      opacity: 0;
+      transform: translateY(120px) scale(0.95);
+      animation: volcanicSlideUp 1s cubic-bezier(.22,1.61,.36,1) forwards;
+    }
+    @keyframes volcanicSlideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(120px) scale(0.95);
+      }
+      60% {
+        opacity: 1;
+        transform: translateY(-18px) scale(1.04);
+      }
+      80% {
+        transform: translateY(8px) scale(0.98);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    .feature-card h3 {
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      font-size: 1.1em;
+      color: var(--accent);
+    }
+    .feature-card p {
+      color: #444;
+      font-size: 1em;
+    }
+    .card {
+      background: #f7f9ff;
+      border-radius: 1rem;
+      box-shadow: 0 2px 12px rgba(108,92,231,0.07);
+      padding: 1.2rem 1.5rem;
+      margin-top: 2rem;
+      color: #222;
+    }
+    .bottom-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      background: #1a2a4f;
+      padding: 1rem 0 1.2rem 0;
+      border-top: 1px solid #233e7b;
+      margin-top: 2rem;
+    }
+    .bottom-tabs .tab {
+      color: var(--accent);
+      font-weight: 500;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: color 0.2s;
+    }
+    .bottom-tabs .tab:hover {
+      color: #a29bfe;
+      text-decoration: underline;
+    }
+    /* Premium card styles remain unchanged */
+    .premium-card {
+      background: linear-gradient(90deg, #ffd700 60%, #fffbe6 100%);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      text-align: center;
+      color: #222;
+    }
+    .premium-btn {
+      background: #ffb300;
+      color: #222;
+      border: none;
+      border-radius: 2em;
+      padding: 0.7em 2em;
+      font-weight: bold;
+      font-size: 1rem;
+      margin-top: 1em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .premium-btn:hover {
+      background: #ffd700;
+    }
+    @media (max-width: 700px) {
+      .features-grid { flex-direction: column; }
+      .quick-actions { flex-direction: column; gap: 1rem; }
+      .container { padding: 0 0.5rem 2rem 0.5rem; }
+    }
+    .hero-section {
+      background: linear-gradient(90deg, #6c5ce7 60%, #81ecec 100%);
+      padding: 2.5rem 0 1.5rem 0;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #fff;
+    }
+    .hero-content h1 {
+      font-size: 2.3rem;
+      margin-bottom: 0.3em;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(108,92,231,0.12);
+    }
+    .hero-tagline {
+      font-size: 1.2rem;
+      color: #dfe6fb;
+      margin-bottom: 1.2em;
+    }
+    .hero-img {
+      max-width: 320px;
+      width: 90%;
+      margin: 0 auto;
+      display: block;
+      filter: drop-shadow(0 4px 16px rgba(46,125,50,0.10));
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.7em;
+    }
+    .user-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #e8f5e9;
+      border: 2px solid #2e7d32;
+      object-fit: cover;
+    }
+    .action-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 2em;
+      padding: 0.7em 1.5em;
+      font-weight: 500;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(46,125,50,0.07);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .action-btn:hover {
+      background: #4834d4;
+      transform: translateY(-2px) scale(1.04);
+    }
+    .action-icon {
+      font-size: 1.2em;
+    }
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 0.5em;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .premium-card.premium-animated {
+      animation: pulseGlow 2.5s infinite alternate;
+    }
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 0 0 #ffd70044; }
+      100% { box-shadow: 0 0 24px 8px #ffd70044; }
+    }
+    @media (max-width: 700px) {
+      .hero-content h1 { font-size: 1.4rem; }
+      .hero-img { max-width: 180px; }
+      .user-avatar { width: 28px; height: 28px; }
+      .hero-section { border-radius: 0; }
+    }
+  </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <h1>Welcome to <span style="color:#2e7d32;">Smart Budget</span></h1>
+        <p class="hero-tagline">Take control of your finances with ease and confidence.</p>
+        <img src="images/hero-graphic.svg" alt="Smart Budget Hero" class="hero-img">
+      </div>
+    </section>
+
+    <header class="topbar">
+      <div class="logo">Smart Budget</div>
+    </header>
+
+    <main class="container">
+      <div class="dashboard-header">
+        <div class="user-info">
+          <img src="images/logo.svg" alt="User Avatar" class="user-avatar">
+          <div class="user-greeting" id="userGreeting">Welcome!</div>
+        </div>
+        <a href="login.html">Logout</a>
+      </div>
+
+      <div class="quick-actions">
+        <a class="button" href="budget.html"><span class="action-icon">💸</span> Add Expense</a>
+        <a class="button" href="Savings.html"><span class="action-icon">🎯</span> Add Savings Goal</a>
+        <a class="button" href="reports.html"><span class="action-icon">📊</span> View Reports</a>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <img src="images/feature-1.svg" alt="Expense Tracking" class="feature-icon">
+          <h3>Expense Tracking</h3>
+          <p>Log and categorize your expenses easily. Stay on top of your daily spending.</p>
+        </div>
+        <div class="feature-card">
+          <img src="images/feature-2.svg" alt="Savings Goals" class="feature-icon">
+          <h3>Savings Goals</h3>
+          <p>Set, track, and achieve your savings goals with visual progress bars.</p>
+        </div>
+        <div class="feature-card">
+          <img src="images/feature-3.svg" alt="Analytics" class="feature-icon">
+          <h3>Analytics & Insights</h3>
+          <p>See where your money goes with simple charts and monthly summaries.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon" style="font-size:2.2em;">⏰</span>
+          <h3>Reminders</h3>
+          <p>Get friendly reminders for bills and savings milestones.</p>
+        </div>
+      </div>
+
+      <div class="premium-card premium-animated">
+        <h2>Upgrade to <span style="color:#bfa100;">Smart Budget Premium</span></h2>
+        <ul style="text-align:left; max-width:400px; margin:0 auto 1em auto;">
+          <li>Unlimited expense categories</li>
+          <li>Advanced analytics & export to Excel</li>
+          <li>Priority support</li>
+          <li>Sync across all your devices</li>
+          <li>Early access to new features</li>
+        </ul>
+        <button class="premium-btn" onclick="alert('Premium coming soon!')">Go Premium</button>
+        <div style="font-size:0.95em; color:#555; margin-top:0.5em;">Try Premium free for 14 days!</div>
+      </div>
+
+      <section class="card">
+        <h2>Terms &amp; Conditions (short)</h2>
+        <p>By using Smart Budget you agree that data will be stored locally on your device (for this demo). Do not store sensitive info. This demo is for educational use.</p>
+      </section>
+    </main>
+
+    <footer class="bottom-tabs">
+      <a class="tab" href="budget.html">Add Expense</a>
+      <a class="tab" href="Savings.html">Saving Goal</a>
+      <a class="tab" href="reports.html">View Reports</a>
+      <a class="tab" href="Premium.html">Go Premium</a>
+      <a class="tab" href="login.html">Login</a>
+      <a class="tab" href="signup.html">Sign Up</a>
+    </footer>
+
+    <script>
+      // Show user's name or email if available
+      window.addEventListener('DOMContentLoaded', function() {
+        let users = JSON.parse(localStorage.getItem('sb_users') || '[]');
+        let email = localStorage.getItem('sb_user_email');
+        let name = '';
+        if (users.length && email) {
+          let user = users.find(u => u.email === email);
+          if (user) name = user.fullname;
+        }
+        document.getElementById('userGreeting').textContent = name
+          ? `Welcome, ${name}!`
+          : (email ? `Welcome, ${email}!` : 'Welcome!');
+      });
+      // Add subtle animation to feature cards
+      document.querySelectorAll('.feature-card').forEach((card, i) => {
+        card.style.opacity = 0;
+        card.style.transform = 'translateY(120px) scale(0.95)';
+      });
+
+      // Animate feature cards when they become visible
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const card = entry.target;
+            if (!card.classList.contains('volcanic-animated')) {
+              card.style.animationDelay = (0.2 + Array.from(card.parentNode.children).indexOf(card) * 0.18) + 's';
+              card.style.animationName = 'volcanicSlideUp';
+              card.classList.add('volcanic-animated');
+            }
+          }
+        });
+      }, { threshold: 0.3 });
+      document.querySelectorAll('.feature-card').forEach(card => {
+        observer.observe(card);
+      });
+
+      function getMonth(dateStr) {
+        const d = new Date(dateStr);
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December"];
+        return monthNames[d.getMonth()] + ' ' + d.getFullYear();
+      }
+    </script>
+</body>
+</html>

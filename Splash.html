@@ -1,0 +1,59 @@
+<!doctype html> 
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smart Budget — Splash</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Center splash content vertically and horizontally */
+    .splash-body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh; /* full viewport height */
+      background-color: #f5f5f5; /* optional, or match your theme */
+      margin: 0;
+    }
+
+    .splash-card {
+      text-align: center;
+    }
+
+    .splash-card img.logo {
+      display: block;
+      margin: 0 auto 20px auto; /* centers the logo and adds spacing below */
+    }
+
+    .splash-card h1 {
+      margin: 0 0 10px 0;
+      font-size: 2rem;
+    }
+
+    .splash-card p.muted {
+      color: #555;
+      font-size: 1rem;
+    }
+  </style>
+  <script>
+    // simple splash -> welcome after 2.2s (or skip if already logged in)
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        const current = localStorage.getItem('currentUser');
+        if (current) {
+          window.location.href = 'dashboard.html';
+          return;
+        }
+      } catch(e){}
+      setTimeout(()=> location.href='welcome.html', 2200);
+    });
+  </script>
+</head>
+<body class="splash-body">
+  <div class="splash-card">
+    <img src="images/logo.svg" alt="Smart Budget logo" class="logo" width="140" height="140">
+    <h1>Smart Budget</h1>
+    <p class="muted">Helping you lower expenses • save better • track spending</p>
+  </div>
+</body>
+</html>

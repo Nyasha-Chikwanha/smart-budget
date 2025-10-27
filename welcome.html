@@ -1,4 +1,3 @@
-<!-- Auto-updated: integrated navigation and redirects -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -55,20 +54,26 @@
       gap: 1.5rem;
       margin-bottom: 2rem;
     }
-    .quick-actions button {
+    .quick-actions .button {
       background: var(--accent);
       color: #fff;
       border: none;
-      border-radius: 2em;
-      padding: 0.7em 1.5em;
+      border-radius: 8px;
+      padding: 0.9em 1.5em;
       font-weight: 500;
       font-size: 1rem;
       cursor: pointer;
       box-shadow: 0 2px 8px rgba(46,125,50,0.07);
-      transition: background 0.2s;
+      transition: background 0.2s, transform 0.2s;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
     }
-    .quick-actions button:hover {
+    .quick-actions .button:hover {
       background: #4834d4;
+      transform: translateY(-2px);
+      text-decoration: none;
     }
     .features-grid {
       display: flex;
@@ -141,12 +146,15 @@
       text-decoration: none;
       font-size: 1.1rem;
       transition: color 0.2s;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
     }
     .bottom-tabs .tab:hover {
       color: #a29bfe;
       text-decoration: underline;
+      background: rgba(255,255,255,0.1);
     }
-    /* Premium card styles remain unchanged */
     .premium-card {
       background: linear-gradient(90deg, #ffd700 60%, #fffbe6 100%);
       border-radius: 1rem;
@@ -170,38 +178,6 @@
     }
     .premium-btn:hover {
       background: #ffd700;
-    }
-    @media (max-width: 700px) {
-      .features-grid { flex-direction: column; }
-      .quick-actions { flex-direction: column; gap: 1rem; }
-      .container { padding: 0 0.5rem 2rem 0.5rem; }
-    }
-    .hero-section {
-      background: linear-gradient(90deg, #6c5ce7 60%, #81ecec 100%);
-      padding: 2.5rem 0 1.5rem 0;
-      text-align: center;
-      margin-bottom: 1.5rem;
-      color: #fff;
-    }
-    .hero-content h1 {
-      font-size: 2.3rem;
-      margin-bottom: 0.3em;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: #fff;
-      text-shadow: 0 2px 8px rgba(108,92,231,0.12);
-    }
-    .hero-tagline {
-      font-size: 1.2rem;
-      color: #dfe6fb;
-      margin-bottom: 1.2em;
-    }
-    .hero-img {
-      max-width: 320px;
-      width: 90%;
-      margin: 0 auto;
-      display: block;
-      filter: drop-shadow(0 4px 16px rgba(46,125,50,0.10));
     }
     .user-info {
       display: flex;
@@ -254,10 +230,225 @@
       100% { box-shadow: 0 0 24px 8px #ffd70044; }
     }
     @media (max-width: 700px) {
-      .hero-content h1 { font-size: 1.4rem; }
-      .hero-img { max-width: 180px; }
-      .user-avatar { width: 28px; height: 28px; }
-      .hero-section { border-radius: 0; }
+      .features-grid { flex-direction: column; }
+      .quick-actions { flex-direction: column; gap: 1rem; }
+      .container { padding: 0 0.5rem 2rem 0.5rem; }
+      .bottom-tabs { flex-wrap: wrap; gap: 1rem; }
+    }
+    .hero-section {
+      background: linear-gradient(90deg, #6c5ce7 60%, #81ecec 100%);
+      padding: 2.5rem 0 1.5rem 0;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #fff;
+    }
+    .hero-content h1 {
+      font-size: 2.3rem;
+      margin-bottom: 0.3em;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(108,92,231,0.12);
+    }
+    .hero-tagline {
+      font-size: 1.2rem;
+      color: #dfe6fb;
+      margin-bottom: 1.2em;
+    }
+    .hero-img {
+      max-width: 320px;
+      width: 90%;
+      margin: 0 auto;
+      display: block;
+      filter: drop-shadow(0 4px 16px rgba(46,125,50,0.10));
+    }
+    
+    /* Enhanced Financial Dashboard Styles */
+    .financial-overview {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .financial-card {
+      background: #f7f9ff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(108,92,231,0.1);
+      border-top: 4px solid var(--accent);
+    }
+    .financial-value {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin: 0.5rem 0;
+    }
+    .financial-label {
+      font-size: 1rem;
+      color: #666;
+      font-weight: 500;
+    }
+    .income-card {
+      border-top-color: #2e7d32;
+    }
+    .expense-card {
+      border-top-color: #d32f2f;
+    }
+    .balance-card {
+      border-top-color: #4834d4;
+    }
+    .goals-card {
+      border-top-color: #ff6b00;
+    }
+    .recent-activity {
+      margin-top: 1.5rem;
+    }
+    .activity-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      margin: 0.8rem 0;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #6c5ce7;
+    }
+    .activity-income {
+      border-left-color: #2e7d32;
+    }
+    .activity-expense {
+      border-left-color: #d32f2f;
+    }
+    .progress-bar {
+      background: #e0e0e0;
+      border-radius: 10px;
+      height: 8px;
+      margin: 0.5rem 0;
+      overflow: hidden;
+    }
+    .progress-fill {
+      background: #2e7d32;
+      height: 100%;
+      border-radius: 10px;
+      transition: width 0.3s ease;
+    }
+    .refresh-btn {
+      background: #6c5ce7;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-left: 1rem;
+      transition: background 0.2s;
+    }
+    .refresh-btn:hover {
+      background: #4834d4;
+    }
+    .refresh-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .save-btn {
+      background: #2e7d32;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-left: 0.5rem;
+      transition: background 0.2s;
+    }
+    .save-btn:hover {
+      background: #1b5e20;
+    }
+    .save-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    /* Logout Confirmation Modal */
+    .logout-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .logout-modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+
+    .logout-modal-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #4834d4;
+      margin-bottom: 1rem;
+    }
+
+    .logout-modal-message {
+      margin-bottom: 2rem;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .logout-modal-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .logout-btn {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 2em;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .logout-btn-cancel {
+      background: #f1f2f6;
+      color: #666;
+    }
+
+    .logout-btn-cancel:hover {
+      background: #e0e0e0;
+    }
+
+    .logout-btn-confirm {
+      background: #4834d4;
+      color: white;
+    }
+
+    .logout-btn-confirm:hover {
+      background: #341f97;
+    }
+
+    .saving-indicator {
+      display: none;
+      background: #e8f5e8;
+      border: 1px solid #2e7d32;
+      border-radius: 8px;
+      padding: 0.8rem;
+      margin: 1rem 0;
+      text-align: center;
+      color: #2e7d32;
+      font-weight: 500;
     }
   </style>
 </head>
@@ -276,19 +467,75 @@
     </header>
 
     <main class="container">
+      <!-- Saving Indicator -->
+      <div id="savingIndicator" class="saving-indicator">
+        ⏳ Saving your data... Please wait.
+      </div>
+
       <div class="dashboard-header">
         <div class="user-info">
           <img src="images/logo.svg" alt="User Avatar" class="user-avatar">
           <div class="user-greeting" id="userGreeting">Welcome!</div>
         </div>
-        <a href="login.html">Logout</a>
+        <div>
+          <a href="login.html" onclick="confirmLogout(event); return false;">Logout</a>
+          <button class="save-btn" onclick="saveAllData()" id="saveBtn" title="Save All Data">💾 Save</button>
+          <button class="refresh-btn" onclick="refreshDashboard()" id="refreshBtn" title="Refresh Dashboard">🔄</button>
+        </div>
       </div>
 
+      <!-- UPDATED QUICK ACTIONS - Add Expense now goes to budget.html -->
       <div class="quick-actions">
         <a class="button" href="budget.html"><span class="action-icon">💸</span> Add Expense</a>
         <a class="button" href="Savings.html"><span class="action-icon">🎯</span> Add Savings Goal</a>
         <a class="button" href="reports.html"><span class="action-icon">📊</span> View Reports</a>
       </div>
+
+      <!-- Enhanced Financial Dashboard -->
+      <section class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <h2>Your Financial Dashboard</h2>
+          <small style="color: #666;">Last updated: <span id="lastUpdated">Just now</span></small>
+        </div>
+        
+        <!-- Financial Summary Cards -->
+        <div class="financial-overview" id="financialOverview">
+          <div class="financial-card income-card">
+            <div class="financial-label">Total Income</div>
+            <div class="financial-value" id="totalIncome" style="color: #2e7d32;">$0.00</div>
+            <div style="font-size: 0.9rem; color: #666;">All time income</div>
+          </div>
+          <div class="financial-card expense-card">
+            <div class="financial-label">Total Expenses</div>
+            <div class="financial-value" id="totalExpenses" style="color: #d32f2f;">$0.00</div>
+            <div style="font-size: 0.9rem; color: #666;">All time expenses</div>
+          </div>
+          <div class="financial-card balance-card">
+            <div class="financial-label">Current Balance</div>
+            <div class="financial-value" id="netBalance" style="color: #4834d4;">$0.00</div>
+            <div style="font-size: 0.9rem; color: #666;">Net balance</div>
+          </div>
+          <div class="financial-card goals-card">
+            <div class="financial-label">Active Goals</div>
+            <div class="financial-value" id="activeGoals" style="color: #ff6b00;">0</div>
+            <div style="font-size: 0.9rem; color: #666;">Savings targets</div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="recent-activity">
+          <h3>Recent Financial Activity</h3>
+          <div id="recentActivityList">
+            <p>Loading your recent activity...</p>
+          </div>
+        </div>
+
+        <!-- Savings Goals Progress -->
+        <div id="goalsProgress" style="display: none;">
+          <h3>Your Savings Goals Progress</h3>
+          <div id="goalsList"></div>
+        </div>
+      </section>
 
       <div class="features-grid">
         <div class="feature-card">
@@ -322,67 +569,920 @@
           <li>Sync across all your devices</li>
           <li>Early access to new features</li>
         </ul>
-        <button class="premium-btn" onclick="alert('Premium coming soon!')">Go Premium</button>
+        <button class="premium-btn" onclick="goToPremium()">Go Premium</button>
         <div style="font-size:0.95em; color:#555; margin-top:0.5em;">Try Premium free for 14 days!</div>
       </div>
 
       <section class="card">
-        <h2>Terms &amp; Conditions (short)</h2>
-        <p>By using Smart Budget you agree that data will be stored locally on your device (for this demo). Do not store sensitive info. This demo is for educational use.</p>
+        <h2>Financial Insights</h2>
+        <div id="quickInsights">
+          <p>Your personalized financial insights will appear here...</p>
+        </div>
       </section>
     </main>
 
+    <!-- UPDATED BOTTOM TABS - Add Expense now goes to budget.html -->
     <footer class="bottom-tabs">
       <a class="tab" href="budget.html">Add Expense</a>
       <a class="tab" href="Savings.html">Saving Goal</a>
       <a class="tab" href="reports.html">View Reports</a>
       <a class="tab" href="Premium.html">Go Premium</a>
-      <a class="tab" href="login.html">Login</a>
-      <a class="tab" href="signup.html">Sign Up</a>
+      <a class="tab" href="login.html" onclick="confirmLogout(event); return false;">Logout</a>
     </footer>
 
-    <script>
-      // Show user's name or email if available
-      window.addEventListener('DOMContentLoaded', function() {
-        let users = JSON.parse(localStorage.getItem('sb_users') || '[]');
-        let email = localStorage.getItem('sb_user_email');
-        let name = '';
-        if (users.length && email) {
-          let user = users.find(u => u.email === email);
-          if (user) name = user.fullname;
-        }
-        document.getElementById('userGreeting').textContent = name
-          ? `Welcome, ${name}!`
-          : (email ? `Welcome, ${email}!` : 'Welcome!');
-      });
-      // Add subtle animation to feature cards
-      document.querySelectorAll('.feature-card').forEach((card, i) => {
-        card.style.opacity = 0;
-        card.style.transform = 'translateY(120px) scale(0.95)';
-      });
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="logout-modal">
+      <div class="logout-modal-content">
+        <h3 class="logout-modal-title">Save Before Logging Out?</h3>
+        <p class="logout-modal-message">
+          Would you like to save your current data to the database?<br>
+          This ensures you can continue right where you left off when you log back in.
+        </p>
+        <div class="logout-modal-actions">
+          <button class="logout-btn logout-btn-cancel" onclick="closeLogoutModal()">No, Logout Without Saving</button>
+          <button class="logout-btn logout-btn-confirm" onclick="saveAndLogout()">Yes, Save & Logout</button>
+        </div>
+      </div>
+    </div>
 
-      // Animate feature cards when they become visible
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const card = entry.target;
-            if (!card.classList.contains('volcanic-animated')) {
-              card.style.animationDelay = (0.2 + Array.from(card.parentNode.children).indexOf(card) * 0.18) + 's';
-              card.style.animationName = 'volcanicSlideUp';
-              card.classList.add('volcanic-animated');
+    <script>
+      // ==================== ENHANCED DATA SAVING TO CORRECT TABLES ====================
+
+      // Enhanced save all data function with proper error handling and fallbacks
+      async function saveAllDataToDatabase() {
+        const user_id = localStorage.getItem('sb_user_id');
+        if (!user_id) {
+          console.log('No user ID found, skipping save');
+          return { success: false, saved_count: 0 };
+        }
+
+        try {
+          // Get all transactions from localStorage
+          const allTransactions = JSON.parse(localStorage.getItem('sb_transactions') || '[]');
+          const userTransactions = allTransactions.filter(t => t.user_id == user_id);
+          
+          // Separate income and expenses
+          const incomeData = userTransactions.filter(t => t.type === 'income');
+          const expenseData = userTransactions.filter(t => t.type === 'expense');
+          
+          let savedCount = 0;
+          let errors = [];
+
+          // Save income to income table
+          if (incomeData.length > 0) {
+            try {
+              const incomeResponse = await fetch('api/save_income.php', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  user_id: user_id,
+                  income: incomeData.map(income => ({
+                    source: income.category || 'General',
+                    amount: income.amount,
+                    description: income.description || '',
+                    date: income.date,
+                    created_at: income.createdAt || new Date().toISOString()
+                  }))
+                })
+              });
+              
+              if (incomeResponse.ok) {
+                const incomeResult = await incomeResponse.json();
+                savedCount += incomeResult.saved_count || 0;
+                console.log('Income saved to database:', incomeResult);
+              } else {
+                errors.push('Income save failed: ' + incomeResponse.status);
+                console.warn('Income save failed, continuing without income data');
+              }
+            } catch (incomeError) {
+              errors.push('Income save error: ' + incomeError.message);
+              console.warn('Income save error, continuing without income data:', incomeError);
             }
           }
-        });
-      }, { threshold: 0.3 });
-      document.querySelectorAll('.feature-card').forEach(card => {
-        observer.observe(card);
+
+          // Save expenses to expenses table
+          if (expenseData.length > 0) {
+            try {
+              const expenseResponse = await fetch('api/save_expenses.php', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  user_id: user_id,
+                  expenses: expenseData.map(expense => ({
+                    category: expense.category,
+                    amount: expense.amount,
+                    description: expense.description || '',
+                    date: expense.date,
+                    created_at: expense.createdAt || new Date().toISOString()
+                  }))
+                })
+              });
+              
+              if (expenseResponse.ok) {
+                const expenseResult = await expenseResponse.json();
+                savedCount += expenseResult.saved_count || 0;
+                console.log('Expenses saved to database:', expenseResult);
+              } else {
+                errors.push('Expenses save failed: ' + expenseResponse.status);
+                console.warn('Expenses save failed, continuing without expense data');
+              }
+            } catch (expenseError) {
+              errors.push('Expenses save error: ' + expenseError.message);
+              console.warn('Expenses save error, continuing without expense data:', expenseError);
+            }
+          }
+
+          // Save goals to goals table
+          const goals = JSON.parse(localStorage.getItem('goalsData') || '[]');
+          const userGoals = goals.filter(g => g.user_id == user_id);
+          
+          if (userGoals.length > 0) {
+            try {
+              const goalsResponse = await fetch('api/save_goals.php', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  user_id: user_id,
+                  goals: userGoals.map(goal => ({
+                    name: goal.name || goal.goalName || 'Unnamed Goal',
+                    target_amount: goal.target_amount || goal.goalAmount || 0,
+                    current_amount: goal.current_amount || goal.savedAmount || 0,
+                    deadline: goal.deadline || goal.goalDate || new Date().toISOString(),
+                    description: goal.description || goal.desc || '',
+                    status: goal.status || 'active'
+                  }))
+                })
+              });
+              
+              if (goalsResponse.ok) {
+                const goalsResult = await goalsResponse.json();
+                savedCount += goalsResult.saved_count || 0;
+                console.log('Goals saved to database:', goalsResult);
+              } else {
+                errors.push('Goals save failed: ' + goalsResponse.status);
+                console.warn('Goals save failed, continuing without goals data');
+              }
+            } catch (goalsError) {
+              errors.push('Goals save error: ' + goalsError.message);
+              console.warn('Goals save error, continuing without goals data:', goalsError);
+            }
+          }
+
+          // Only try to save report if we successfully saved some data
+          if (savedCount > 0) {
+            try {
+              const dashboardData = {
+                summary: calculateFinancialSummary(userTransactions),
+                recent_activity: userTransactions.slice(-10),
+                goals_progress: userGoals,
+                generated_at: new Date().toISOString()
+              };
+
+              const reportResponse = await fetch('api/save_report.php', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  user_id: user_id,
+                  report_type: 'dashboard_snapshot',
+                  report_data: dashboardData,
+                  period_start: new Date().toISOString().split('T')[0],
+                  period_end: new Date().toISOString().split('T')[0]
+                })
+              });
+              
+              if (reportResponse.ok) {
+                const reportResult = await reportResponse.json();
+                console.log('Report saved to database:', reportResult);
+              }
+            } catch (reportError) {
+              console.warn('Report save failed, but this is non-critical:', reportError);
+            }
+          }
+
+          if (errors.length > 0) {
+            console.warn('Some data saves failed, but continuing:', errors);
+            // We don't throw an error here because we want to continue even if some saves fail
+          }
+
+          console.log(`Data save completed. Total records: ${savedCount}`);
+          return { success: true, saved_count: savedCount, errors: errors };
+          
+        } catch (error) {
+          console.error('Critical error saving data to database:', error);
+          throw error; // Only throw for critical errors that prevent any saving
+        }
+      }
+
+      // Helper function to calculate financial summary
+      function calculateFinancialSummary(transactions) {
+        const totalIncome = transactions.filter(t => t.type === 'income')
+          .reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+        const totalExpenses = transactions.filter(t => t.type === 'expense')
+          .reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+        const netBalance = totalIncome - totalExpenses;
+        const savingsRate = totalIncome > 0 ? ((netBalance / totalIncome) * 100) : 0;
+
+        return {
+          total_income: totalIncome,
+          total_expenses: totalExpenses,
+          net_balance: netBalance,
+          savings_rate: savingsRate,
+          transaction_count: transactions.length
+        };
+      }
+
+      // Enhanced load user data function
+      async function loadUserData(user_id) {
+        try {
+          // Load income from income table
+          const incomeResponse = await fetch('api/get_income.php?user_id=' + user_id);
+          let income = await incomeResponse.json();
+          
+          // Load expenses from expenses table
+          const expensesResponse = await fetch('api/get_expenses.php?user_id=' + user_id);
+          let expenses = await expensesResponse.json();
+          
+          // Load goals from goals table
+          const goalsResponse = await fetch('api/get_goals.php?user_id=' + user_id);
+          let goals = await goalsResponse.json();
+
+          // Combine income and expenses for compatibility
+          const allTransactions = [...income, ...expenses];
+
+          // Calculate summary from separate tables
+          const totalIncome = income.reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+          const totalExpenses = expenses.reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+          const netBalance = totalIncome - totalExpenses;
+
+          return {
+            success: true,
+            summary: {
+              total_income: totalIncome,
+              total_expenses: totalExpenses,
+              net_balance: netBalance
+            },
+            expenses: expenses,
+            income: income,
+            goals: goals,
+            allTransactions: allTransactions // For backward compatibility
+          };
+        } catch (error) {
+          console.error('Error loading from database, using localStorage fallback:', error);
+          
+          // Fallback to localStorage
+          let transactions = JSON.parse(localStorage.getItem('sb_transactions') || '[]');
+          transactions = transactions.filter(t => t.user_id == user_id);
+          
+          let goals = JSON.parse(localStorage.getItem('goalsData') || '[]');
+          goals = goals.filter(g => g.user_id == user_id);
+          
+          const totalIncome = transactions.filter(t => t.type === 'income')
+            .reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+          const totalExpenses = transactions.filter(t => t.type === 'expense')
+            .reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+          const netBalance = totalIncome - totalExpenses;
+
+          return {
+            success: true,
+            summary: {
+              total_income: totalIncome,
+              total_expenses: totalExpenses,
+              net_balance: netBalance
+            },
+            expenses: transactions.filter(t => t.type === 'expense'),
+            income: transactions.filter(t => t.type === 'income'),
+            goals: goals
+          };
+        }
+      }
+
+      // ==================== LOGOUT CONFIRMATION SYSTEM ====================
+
+      let isLoggingOut = false;
+      let pendingLogout = false;
+      let isRefreshing = false;
+      let isSaving = false;
+      let lastDashboardData = null;
+      let autoRefreshInterval = null;
+      let dataCache = {
+        timestamp: 0,
+        data: null,
+        ttl: 120000 // 2 minutes cache time
+      };
+
+      // Show logout confirmation modal
+      function confirmLogout(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        if (isLoggingOut) return;
+        
+        document.getElementById('logoutModal').style.display = 'flex';
+      }
+
+      // Close logout modal
+      function closeLogoutModal() {
+        document.getElementById('logoutModal').style.display = 'none';
+      }
+
+      // Enhanced save and logout function
+      async function saveAndLogout() {
+        if (isLoggingOut) return;
+        
+        isLoggingOut = true;
+        document.getElementById('logoutModal').style.display = 'none';
+        document.getElementById('savingIndicator').style.display = 'block';
+        
+        try {
+          // Save all data to correct tables
+          const saveResult = await saveAllDataToDatabase();
+          
+          // Show success message
+          document.getElementById('savingIndicator').innerHTML = 
+            `✅ ${saveResult.saved_count} records saved successfully! Logging out...`;
+          document.getElementById('savingIndicator').style.background = '#e8f5e8';
+          document.getElementById('savingIndicator').style.borderColor = '#2e7d32';
+          document.getElementById('savingIndicator').style.color = '#2e7d32';
+          
+          // Wait a moment for user to see the success message
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          
+          // Perform logout
+          performLogout();
+          
+        } catch (error) {
+          console.error('Error saving data before logout:', error);
+          document.getElementById('savingIndicator').innerHTML = 
+            '❌ Error saving data. Logging out without saving...';
+          document.getElementById('savingIndicator').style.background = '#ffebee';
+          document.getElementById('savingIndicator').style.borderColor = '#d32f2f';
+          document.getElementById('savingIndicator').style.color = '#d32f2f';
+          
+          // Wait a moment then logout anyway
+          await new Promise(resolve => setTimeout(resolve, 2000));
+          performLogout();
+        }
+      }
+
+      // Perform the actual logout
+      function performLogout() {
+        if (autoRefreshInterval) {
+          clearInterval(autoRefreshInterval);
+        }
+        
+        // Clear all cached data
+        dataCache = { timestamp: 0, data: null, ttl: 120000 };
+        localStorage.removeItem('sb_user_id');
+        localStorage.removeItem('sb_user_name');
+        localStorage.removeItem('sb_user_email');
+        localStorage.removeItem('sb_logged_in');
+        localStorage.removeItem('last_dashboard_data');
+        localStorage.removeItem('last_dashboard_update');
+        
+        // Redirect to login page
+        window.location.href = 'login.html';
+      }
+
+      // ==================== SAVE ALL DATA FUNCTION ====================
+      
+      // Function to save all data when Save button is clicked
+      async function saveAllData() {
+        if (isSaving) {
+          console.log('Save already in progress, skipping...');
+          return;
+        }
+
+        try {
+          isSaving = true;
+          const saveBtn = document.getElementById('saveBtn');
+          saveBtn.disabled = true;
+          saveBtn.textContent = '⏳';
+          
+          // Show saving indicator
+          document.getElementById('savingIndicator').style.display = 'block';
+          document.getElementById('savingIndicator').innerHTML = '⏳ Saving your data... Please wait.';
+          document.getElementById('savingIndicator').style.background = '#e8f5e8';
+          document.getElementById('savingIndicator').style.borderColor = '#2e7d32';
+          document.getElementById('savingIndicator').style.color = '#2e7d32';
+
+          // Save all data to database
+          const saveResult = await saveAllDataToDatabase();
+          
+          if (saveResult.success) {
+            // Show success message
+            document.getElementById('savingIndicator').innerHTML = 
+              `✅ ${saveResult.saved_count} records saved successfully!`;
+            document.getElementById('savingIndicator').style.background = '#e8f5e8';
+            document.getElementById('savingIndicator').style.borderColor = '#2e7d32';
+            document.getElementById('savingIndicator').style.color = '#2e7d32';
+            
+            // Update last updated time
+            updateLastUpdatedTime();
+            
+            console.log('Data saved successfully:', saveResult);
+          } else {
+            // Show error message
+            document.getElementById('savingIndicator').innerHTML = 
+              '❌ Error saving data. Please try again.';
+            document.getElementById('savingIndicator').style.background = '#ffebee';
+            document.getElementById('savingIndicator').style.borderColor = '#d32f2f';
+            document.getElementById('savingIndicator').style.color = '#d32f2f';
+            
+            console.error('Failed to save data:', saveResult);
+          }
+          
+          // Hide saving indicator after 3 seconds
+          setTimeout(() => {
+            document.getElementById('savingIndicator').style.display = 'none';
+          }, 3000);
+          
+        } catch (error) {
+          console.error('Error saving data:', error);
+          
+          // Show error message
+          document.getElementById('savingIndicator').innerHTML = 
+            '❌ Error saving data. Please try again.';
+          document.getElementById('savingIndicator').style.background = '#ffebee';
+          document.getElementById('savingIndicator').style.borderColor = '#d32f2f';
+          document.getElementById('savingIndicator').style.color = '#d32f2f';
+          
+          // Hide saving indicator after 3 seconds
+          setTimeout(() => {
+            document.getElementById('savingIndicator').style.display = 'none';
+          }, 3000);
+        } finally {
+          isSaving = false;
+          const saveBtn = document.getElementById('saveBtn');
+          saveBtn.disabled = false;
+          saveBtn.textContent = '💾 Save';
+        }
+      }
+
+      // ==================== SIMPLE NAVIGATION ====================
+      
+      // Simple navigation function - no saving prompts
+      function goToPremium() {
+        window.location.href = 'Premium.html';
+      }
+
+      // Enhanced authentication check function
+      function checkLoginStatus() {
+        const isLoggedIn = localStorage.getItem('sb_logged_in') === 'true';
+        const userId = localStorage.getItem('sb_user_id');
+        
+        if (!isLoggedIn || !userId) {
+          alert('Please log in to access this page');
+          window.location.href = 'login.html';
+          return false;
+        }
+        
+        return true;
+      }
+
+      // ==================== SESSION MANAGEMENT ====================
+      
+      // Check if user is logged in when page loads
+      window.addEventListener('DOMContentLoaded', function() {
+        // First check login status
+        if (!checkLoginStatus()) {
+          return; // Stop execution if not logged in
+        }
+        
+        // If logged in, initialize the dashboard
+        initializeDashboard();
       });
 
-      function getMonth(dateStr) {
-        const d = new Date(dateStr);
-        const monthNames = ["January", "February", "March", "April", "May", "June",
-          "July", "August", "September", "October", "November", "December"];
-        return monthNames[d.getMonth()] + ' ' + d.getFullYear();
+      // ==================== DASHBOARD FUNCTIONALITY ====================
+
+      // Set up auto-refresh every 2 minutes
+      function startAutoRefresh() {
+        autoRefreshInterval = setInterval(() => {
+          if (!isRefreshing) {
+            refreshDashboard();
+          }
+        }, 120000); // 2 minutes
+      }
+
+      // Check for fresh dashboard data from forms (performance optimization)
+      function checkForFreshData() {
+        const lastUpdate = localStorage.getItem('last_dashboard_update');
+        const lastData = localStorage.getItem('last_dashboard_data');
+        
+        if (lastUpdate && lastData) {
+          const timeSinceUpdate = Date.now() - parseInt(lastUpdate);
+          
+          // Use fresh data if it's less than 2 minutes old
+          if (timeSinceUpdate < 120000) {
+            try {
+              const freshData = JSON.parse(lastData);
+              freshData.success = true;
+              updateDashboard(freshData);
+              updateLastUpdatedTime();
+              console.log('Using fresh dashboard data from form submission');
+              
+              // Clear the stored data after using it
+              localStorage.removeItem('last_dashboard_data');
+              localStorage.removeItem('last_dashboard_update');
+              return true;
+            } catch (error) {
+              console.error('Error parsing fresh data:', error);
+            }
+          }
+        }
+        return false;
+      }
+
+      // Check cache for recent data
+      function checkCache() {
+        const now = Date.now();
+        if (dataCache.data && (now - dataCache.timestamp) < dataCache.ttl) {
+          console.log('Using cached dashboard data');
+          updateDashboard(dataCache.data);
+          updateLastUpdatedTime();
+          return true;
+        }
+        return false;
+      }
+
+      async function initializeDashboard() {
+        try {
+          const user_id = localStorage.getItem('sb_user_id');
+          
+          if (!user_id) {
+            window.location.href = 'login.html';
+            return;
+          }
+
+          // Update user greeting with actual user data
+          const userName = localStorage.getItem('sb_user_name') || 'User';
+          document.getElementById('userGreeting').textContent = `Welcome back, ${userName}!`;
+
+          // Performance optimization: Check in this order:
+          // 1. Fresh data from forms
+          // 2. Cached data
+          // 3. Server data
+          const hasFreshData = checkForFreshData();
+          if (!hasFreshData) {
+            const hasCachedData = checkCache();
+            if (!hasCachedData) {
+              await refreshDashboard();
+            }
+          }
+          
+          // Start auto-refresh after initial load
+          startAutoRefresh();
+          
+        } catch (error) {
+          console.error('Error initializing dashboard:', error);
+          showError('Failed to load dashboard. Please try refreshing the page.');
+        }
+      }
+
+      // Enhanced refresh dashboard function
+      async function refreshDashboard() {
+        if (isRefreshing) {
+          console.log('Refresh already in progress, skipping...');
+          return;
+        }
+
+        try {
+          isRefreshing = true;
+          const refreshBtn = document.getElementById('refreshBtn');
+          refreshBtn.disabled = true;
+          refreshBtn.textContent = '⏳';
+          
+          const user_id = localStorage.getItem('sb_user_id');
+          if (!user_id) return;
+
+          console.log('Refreshing dashboard data from separate tables...');
+          
+          // Show loading state only if no data is currently displayed
+          if (!lastDashboardData) {
+            document.getElementById('recentActivityList').innerHTML = '<p>Refreshing data...</p>';
+          }
+          
+          // Load user-specific data from separate tables
+          const userData = await loadUserData(user_id);
+          
+          // Update cache
+          dataCache = {
+            timestamp: Date.now(),
+            data: userData,
+            ttl: 120000
+          };
+          
+          lastDashboardData = userData;
+          updateDashboard(userData);
+          updateLastUpdatedTime();
+          console.log('Dashboard refreshed successfully from separate tables');
+          
+        } catch (error) {
+          console.error('Error refreshing dashboard:', error);
+          
+          // Only show error if we don't have any data
+          if (!lastDashboardData) {
+            showError('Unable to refresh dashboard data. Please try again.');
+          }
+        } finally {
+          isRefreshing = false;
+          const refreshBtn = document.getElementById('refreshBtn');
+          refreshBtn.disabled = false;
+          refreshBtn.textContent = '🔄';
+        }
+      }
+
+      function updateDashboard(data) {
+        console.log('Updating dashboard with data:', data);
+        
+        // Update Total Income
+        if (data.summary && data.summary.total_income !== undefined) {
+          const totalIncome = parseFloat(data.summary.total_income).toFixed(2);
+          document.getElementById('totalIncome').textContent = `$${totalIncome}`;
+          document.getElementById('totalIncome').style.color = '#2e7d32';
+        }
+
+        // Update Total Expenses
+        if (data.summary && data.summary.total_expenses !== undefined) {
+          const totalExpenses = parseFloat(data.summary.total_expenses).toFixed(2);
+          document.getElementById('totalExpenses').textContent = `$${totalExpenses}`;
+          document.getElementById('totalExpenses').style.color = '#d32f2f';
+        }
+
+        // Update Current Balance (Net Balance)
+        if (data.summary && data.summary.net_balance !== undefined) {
+          const netBalance = parseFloat(data.summary.net_balance).toFixed(2);
+          document.getElementById('netBalance').textContent = `$${netBalance}`;
+          document.getElementById('netBalance').style.color = netBalance >= 0 ? '#2e7d32' : '#d32f2f';
+        }
+
+        // Update Active Goals Count
+        if (data.goals && Array.isArray(data.goals)) {
+          const activeGoals = data.goals.filter(goal => 
+            goal.status === 'active' || goal.status === 'in progress'
+          ).length;
+          document.getElementById('activeGoals').textContent = activeGoals;
+          document.getElementById('activeGoals').style.color = '#ff6b00';
+        }
+
+        // Display recent activity with all financial transactions
+        displayRecentActivity(data);
+        
+        // Display goals progress
+        displayGoalsProgress(data.goals);
+        
+        // Display financial insights
+        displayFinancialInsights(data);
+      }
+
+      function displayRecentActivity(data) {
+        const container = document.getElementById('recentActivityList');
+        let activityHTML = '';
+
+        // Combine all financial activities
+        const recentItems = [];
+        
+        // Add expenses
+        if (data.expenses && Array.isArray(data.expenses)) {
+          data.expenses.slice(0, 10).forEach(expense => {
+            recentItems.push({
+              type: 'expense',
+              amount: expense.amount,
+              description: expense.category,
+              date: expense.date,
+              details: expense.description,
+              icon: '💸'
+            });
+          });
+        }
+
+        // Add income
+        if (data.income && Array.isArray(data.income)) {
+          data.income.slice(0, 10).forEach(income => {
+            recentItems.push({
+              type: 'income',
+              amount: income.amount,
+              description: income.source,
+              date: income.date,
+              details: income.description,
+              icon: '💰'
+            });
+          });
+        }
+
+        // Add goal updates
+        if (data.goals && Array.isArray(data.goals)) {
+          data.goals.slice(0, 5).forEach(goal => {
+            if (goal.current_amount > 0) {
+              recentItems.push({
+                type: 'savings',
+                amount: goal.current_amount,
+                description: `Saved for ${goal.name}`,
+                date: goal.deadline,
+                details: `Progress: ${((goal.current_amount / goal.target_amount) * 100).toFixed(1)}%`,
+                icon: '🎯'
+              });
+            }
+          });
+        }
+
+        // Sort by date (newest first)
+        recentItems.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        if (recentItems.length === 0) {
+          activityHTML = `
+            <div style="text-align: center; padding: 2rem; color: #666;">
+              <p>No financial activity yet.</p>
+              <p>Start by adding your first expense or income!</p>
+            </div>
+          `;
+        } else {
+          // Use document fragment for better performance with large lists
+          recentItems.slice(0, 10).forEach(item => {
+            const isIncome = item.type === 'income';
+            const isSavings = item.type === 'savings';
+            const amountClass = isIncome ? 'activity-income' : 
+                              isSavings ? 'activity-income' : 'activity-expense';
+            const amountSign = isIncome || isSavings ? '+' : '-';
+            
+            activityHTML += `
+              <div class="activity-item ${amountClass}">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <span style="font-size: 1.2em;">${item.icon}</span>
+                  <div>
+                    <strong>${escapeHtml(item.description)}</strong>
+                    ${item.details ? `<br><small>${escapeHtml(item.details)}</small>` : ''}
+                  </div>
+                </div>
+                <div style="text-align: right;">
+                  <strong style="color: ${isIncome || isSavings ? '#2e7d32' : '#d32f2f'}">
+                    ${amountSign}$${parseFloat(item.amount).toFixed(2)}
+                  </strong>
+                  <br>
+                  <small>${new Date(item.date).toLocaleDateString()}</small>
+                </div>
+              </div>
+            `;
+          });
+        }
+
+        container.innerHTML = activityHTML;
+      }
+
+      function displayGoalsProgress(goals) {
+        const container = document.getElementById('goalsList');
+        const progressSection = document.getElementById('goalsProgress');
+        
+        if (!goals || !Array.isArray(goals) || goals.length === 0) {
+          progressSection.style.display = 'none';
+          return;
+        }
+
+        progressSection.style.display = 'block';
+        
+        let goalsHTML = '';
+        const activeGoals = goals.filter(goal => 
+          goal.status === 'active' || goal.status === 'in progress'
+        );
+        
+        if (activeGoals.length === 0) {
+          goalsHTML = `
+            <div style="text-align: center; padding: 1rem; color: #666;">
+              <p>No active savings goals.</p>
+              <a href="Savings.html" class="button" style="display: inline-flex; margin-top: 0.5rem;">
+                <span class="action-icon">🎯</span> Create Your First Goal
+              </a>
+            </div>
+          `;
+        } else {
+          activeGoals.forEach(goal => {
+            const progress = Math.min((goal.current_amount / goal.target_amount) * 100, 100);
+            const daysLeft = Math.ceil((new Date(goal.deadline) - new Date()) / (1000 * 60 * 60 * 24));
+            const progressColor = progress >= 100 ? '#2e7d32' : 
+                                progress >= 75 ? '#1976d2' : 
+                                progress >= 50 ? '#ff9800' : '#d32f2f';
+            
+            goalsHTML += `
+              <div style="margin: 1rem 0; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid ${progressColor};">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                  <strong>${escapeHtml(goal.name)}</strong>
+                  <span style="font-weight: bold; color: ${progressColor}">${progress.toFixed(1)}%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: ${progress}%; background: ${progressColor};"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.9rem; color: #666; margin-top: 0.5rem;">
+                  <span>$${parseFloat(goal.current_amount).toFixed(2)} / $${parseFloat(goal.target_amount).toFixed(2)}</span>
+                  <span>${daysLeft > 0 ? `${daysLeft} days left` : 'Target reached!'}</span>
+                </div>
+                <div style="font-size: 0.8rem; color: #666; margin-top: 0.3rem;">
+                  Status: <strong>${goal.status}</strong>
+                </div>
+              </div>
+            `;
+          });
+        }
+
+        container.innerHTML = goalsHTML;
+      }
+
+      function displayFinancialInsights(data) {
+        const container = document.getElementById('quickInsights');
+        let insights = [];
+
+        if (data.summary) {
+          const netBalance = parseFloat(data.summary.net_balance || 0);
+          
+          if (netBalance > 0) {
+            insights.push('🎉 Excellent! Your finances are in great shape with a positive balance.');
+          } else if (netBalance < 0) {
+            insights.push('💡 Your expenses exceed your income. Consider reviewing your spending habits.');
+          } else {
+            insights.push('⚖️ Your income and expenses are balanced. Good financial management!');
+          }
+
+          // Expense insights
+          if (data.expenses && data.expenses.length > 0) {
+            const totalExpenses = parseFloat(data.summary.total_expenses || 0);
+            const avgExpense = totalExpenses / data.expenses.length;
+            insights.push(`📊 You've recorded ${data.expenses.length} expenses with an average of $${avgExpense.toFixed(2)} each.`);
+          }
+
+          // Income insights
+          if (data.income && data.income.length > 0) {
+            insights.push(`💰 You have ${data.income.length} income sources recorded.`);
+          }
+        }
+
+        // Goals insights
+        if (data.goals && data.goals.some(goal => 
+          goal.status === 'active' || goal.status === 'in progress'
+        )) {
+          const activeGoalsCount = data.goals.filter(goal => 
+            goal.status === 'active' || goal.status === 'in progress'
+          ).length;
+          insights.push(`🎯 You're actively working on ${activeGoalsCount} savings goal${activeGoalsCount !== 1 ? 's' : ''}. Keep going!`);
+        }
+
+        if (insights.length === 0) {
+          insights.push('💫 Welcome! Start by adding your first expense, income, or savings goal to get personalized insights.');
+        }
+
+        container.innerHTML = insights.map(insight => `
+          <div style="margin: 0.8rem 0; padding: 0.8rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6c5ce7;">
+            ${insight}
+          </div>
+        `).join('');
+      }
+
+      function updateLastUpdatedTime() {
+        const now = new Date();
+        document.getElementById('lastUpdated').textContent = now.toLocaleTimeString();
+      }
+
+      function showError(message) {
+        const errorDiv = document.createElement('div');
+        errorDiv.style.cssText = `
+          background: #ffebee;
+          color: #d32f2f;
+          padding: 1rem;
+          border-radius: 8px;
+          border-left: 4px solid #d32f2f;
+          margin: 1rem 0;
+        `;
+        errorDiv.innerHTML = `<strong>Error:</strong> ${message}`;
+        
+        const container = document.querySelector('.container');
+        container.insertBefore(errorDiv, container.firstChild);
+        
+        // Remove error after 5 seconds
+        setTimeout(() => {
+          if (errorDiv.parentNode) {
+            errorDiv.parentNode.removeChild(errorDiv);
+          }
+        }, 5000);
+      }
+
+      function escapeHtml(unsafe) {
+        if (typeof unsafe !== 'string') return unsafe;
+        return unsafe
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      // Legacy logout function (for backward compatibility)
+      function logout() {
+        confirmLogout(new Event('click'));
       }
     </script>
 </body>

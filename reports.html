@@ -25,7 +25,7 @@
     }
 
     main {
-      max-width: 900px;
+      max-width: 1200px;
       margin: 2rem auto;
       background: rgba(255,255,255,0.95);
       border-radius: 1rem;
@@ -40,15 +40,57 @@
       padding-bottom: 0.3rem;
     }
 
+    .financial-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .summary-card {
+      background: #f7f9ff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(108,92,231,0.1);
+      border-top: 4px solid var(--accent);
+    }
+
+    .summary-value {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin: 0.5rem 0;
+    }
+
+    .income-card {
+      border-top-color: #2e7d32;
+    }
+
+    .expense-card {
+      border-top-color: #d32f2f;
+    }
+
+    .balance-card {
+      border-top-color: #4834d4;
+    }
+
+    .goals-card {
+      border-top-color: #ff6b00;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 1rem;
+      margin: 1.5rem 0;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
     th, td {
-      border: 1px solid #ccc;
-      padding: 0.7rem;
+      border: 1px solid #e0e0e0;
+      padding: 0.8rem;
       text-align: left;
       font-size: 0.95rem;
     }
@@ -56,10 +98,15 @@
     th {
       background: #4834d4;
       color: #fff;
+      font-weight: 600;
     }
 
     tr:nth-child(even) {
-      background: #f9f9f9;
+      background: #f8f9fa;
+    }
+
+    tr:hover {
+      background: #f1f3f4;
     }
 
     .status {
@@ -84,16 +131,50 @@
       color: #6b0b00;
     }
 
-    .summary {
-      margin-top: 1.5rem;
-      padding: 1rem;
+    .motivation-card {
+      background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+      padding: 2rem;
       border-radius: 1rem;
-      background: #f1f2f6;
+      text-align: center;
+      margin: 2rem 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    .summary p {
-      font-size: 1.1rem;
-      margin: 0.3rem 0;
+    .motivation-text {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #2d3436;
+      margin-bottom: 1rem;
+    }
+
+    .progress-container {
+      background: #e0e0e0;
+      border-radius: 1rem;
+      overflow: hidden;
+      margin: 1rem 0;
+      height: 20px;
+    }
+
+    .progress-bar {
+      background: linear-gradient(90deg, #6c5ce7, #81ecec);
+      height: 100%;
+      width: 0%;
+      border-radius: 1rem;
+      transition: width 0.3s ease;
+    }
+
+    .category-breakdown {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .category-item {
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: 8px;
+      border-left: 4px solid #6c5ce7;
     }
 
     .back-btn {
@@ -115,9 +196,106 @@
       background: #341f97;
     }
 
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      color: #666;
+    }
+
+    .dashboard-save-notice {
+      background: #e8f5e8;
+      border: 1px solid #2e7d32;
+      border-radius: 8px;
+      padding: 0.8rem;
+      margin: 1rem 0;
+      text-align: center;
+      color: #2e7d32;
+      font-weight: 500;
+    }
+
+    .insight-card {
+      background: #fffbe6;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      margin: 1rem 0;
+      border-left: 4px solid #ffd700;
+    }
+
+    .report-section {
+      margin: 3rem 0;
+    }
+
+    .report-section:first-child {
+      margin-top: 0;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .section-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .action-btn {
+      background: #6c5ce7;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+
+    .action-btn:hover {
+      background: #5649c0;
+    }
+
+    .save-report-btn {
+      background: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+      margin-left: 0.5rem;
+    }
+
+    .save-report-btn:hover {
+      background: #1b5e20;
+    }
+
+    .save-report-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
     @media (max-width: 700px) {
       table {
         font-size: 0.85rem;
+      }
+      .financial-summary {
+        grid-template-columns: 1fr;
+      }
+      .category-breakdown {
+        grid-template-columns: 1fr;
+      }
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
       }
     }
   </style>
@@ -126,181 +304,919 @@
   <header>📊 Smart Budget — Reports</header>
 
   <main>
-    <section id="summarySection">
-      <h2>Overall Summary</h2>
-      <div class="summary" id="summaryStats">
-        <p>Total Income: $0</p>
-        <p>Total Expenses: $0</p>
-        <p>Remaining Balance: $0</p>
+    <div id="reportsContent">
+      <!-- Dashboard Save Notice -->
+      <div id="dashboardSaveNotice" class="dashboard-save-notice" style="display: none;">
+        ✅ Dashboard data updated! Your financial overview is now available on the welcome page.
       </div>
-    </section>
 
-    <section id="transactionsSection">
-      <h2>All Transactions</h2>
-      <table id="transactionsTable">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Type</th>
-            <th>Category</th>
-            <th>Amount</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Entries inserted by JS -->
-        </tbody>
-      </table>
-    </section>
+      <!-- Financial Summary Section -->
+      <section id="summarySection" class="report-section">
+        <div class="section-header">
+          <h2>📈 Overall Financial Summary</h2>
+          <div class="section-actions">
+            <button class="save-report-btn" onclick="saveCurrentReport()" id="saveReportBtn">
+              💾 Save Report
+            </button>
+            <button class="action-btn" onclick="loadSavedReports()">
+              📁 Load Saved
+            </button>
+          </div>
+        </div>
+        <div class="financial-summary" id="financialSummary">
+          <div class="loading">Loading your financial summary...</div>
+        </div>
+      </section>
 
-    <section id="monthlySummarySection">
-      <h2>Monthly Summary</h2>
-      <table id="monthlySummaryTable">
-        <thead>
-          <tr>
-            <th>Month</th>
-            <th>Total Income</th>
-            <th>Total Expenses</th>
-            <th>Money Saved</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Monthly summary inserted by JS -->
-        </tbody>
-      </table>
-      <div id="suggestionBox" style="margin-top:1.5em; padding:1em; background:#fffbe6; border-radius:1em; font-size:1.1em; color:#222; box-shadow:0 2px 8px #ffd70044;"></div>
-    </section>
+      <!-- Saved Reports Section -->
+      <section id="savedReportsSection" class="report-section" style="display: none;">
+        <h2>📚 Saved Reports History</h2>
+        <div class="table-container">
+          <div id="savedReportsContainer">
+            <div class="loading">Loading saved reports...</div>
+          </div>
+        </div>
+      </section>
 
-    <section id="goalSection">
-      <h2>Savings Goal Report</h2>
-      <table id="goalTable">
-        <thead>
-          <tr>
-            <th>Goal Name</th>
-            <th>Target Amount</th>
-            <th>Saved Amount</th>
-            <th>Deadline</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Goal inserted by JS -->
-        </tbody>
-      </table>
-    </section>
+      <!-- Motivation Section -->
+      <section id="motivationSection" class="report-section" style="display: none;">
+        <div class="motivation-card">
+          <div class="motivation-text" id="motivationText">Keep up the great work!</div>
+          <div id="motivationDetails"></div>
+        </div>
+      </section>
 
-    <a href="welcome.html" class="back-btn">⬅ Back to Dashboard</a>
+      <!-- All Transactions Section -->
+      <section id="transactionsSection" class="report-section">
+        <div class="section-header">
+          <h2>💳 All Transactions</h2>
+          <div class="section-actions">
+            <button class="action-btn" onclick="exportTransactions()">Export CSV</button>
+          </div>
+        </div>
+        <div class="table-container">
+          <div id="transactionsContainer">
+            <div class="loading">Loading transactions...</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Monthly Summary Section -->
+      <section id="monthlySummarySection" class="report-section">
+        <div class="section-header">
+          <h2>📅 Monthly Summary</h2>
+          <div class="section-actions">
+            <button class="action-btn" onclick="toggleMonthlyChart()">Toggle Chart</button>
+          </div>
+        </div>
+        <div class="table-container">
+          <div id="monthlySummaryContainer">
+            <div class="loading">Loading monthly summary...</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Category Breakdown Section -->
+      <section id="categorySection" class="report-section">
+        <div class="section-header">
+          <h2>📊 Expense Categories</h2>
+          <div class="section-actions">
+            <button class="action-btn" onclick="toggleCategoryView()">Toggle View</button>
+          </div>
+        </div>
+        <div id="categoryContainer">
+          <div class="loading">Loading category breakdown...</div>
+        </div>
+      </section>
+
+      <!-- Goals Progress Section -->
+      <section id="goalSection" class="report-section">
+        <div class="section-header">
+          <h2>🎯 Savings Goals Progress</h2>
+          <div class="section-actions">
+            <button class="action-btn" onclick="sortGoalsByProgress()">Sort by Progress</button>
+          </div>
+        </div>
+        <div class="table-container">
+          <div id="goalContainer">
+            <div class="loading">Loading goals...</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Financial Insights Section -->
+      <section id="insightsSection" class="report-section">
+        <h2>💡 Financial Insights</h2>
+        <div id="insightsContainer">
+          <div class="loading">Generating insights...</div>
+        </div>
+      </section>
+
+      <div style="display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;">
+        <a href="dashboard.html" class="back-btn">⬅ Back to Dashboard</a>
+        <button onclick="refreshReports()" class="back-btn" style="background: #2e7d32;">🔄 Refresh Reports</button>
+        <button onclick="exportToPDF()" class="back-btn" style="background: #d32f2f;">📄 Export PDF</button>
+      </div>
+    </div>
   </main>
 
   <script>
-    // === LOAD TRANSACTIONS ===
-    const transactions = JSON.parse(localStorage.getItem('sb_transactions')) || [];
-    const tbody = document.querySelector('#transactionsTable tbody');
-    let today = new Date().toISOString().slice(0, 10);
-
-    // Add all transactions to the table (forever unless deleted)
-    transactions.forEach(t => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${t.date ? t.date : '-'}</td>
-        <td>${t.type.charAt(0).toUpperCase() + t.type.slice(1)}</td>
-        <td>${t.category || '-'}</td>
-        <td>$${parseFloat(t.amount).toFixed(2)}</td>
-        <td>${t.desc || ''}</td>
-      `;
-      tbody.appendChild(row);
+    // ==================== AUTHENTICATION CHECK ====================
+    
+    // Check if user is logged in when page loads
+    window.addEventListener('DOMContentLoaded', function() {
+      if (!checkLoginStatus()) {
+        return; // Stop execution if not logged in
+      }
+      
+      // If logged in, load reports
+      loadUserReports();
     });
 
-    // === SHOW SUMMARY (refreshes daily) ===
-    // Use a unique id for the summary
-    const summaryId = 'sb_summary_' + today;
-    let summary = JSON.parse(localStorage.getItem(summaryId));
-    if (!summary) {
-      // Calculate today's summary from today's transactions
-      let income = 0, expenses = 0;
-      transactions.forEach(t => {
-        if (t.date === today) {
-          if (t.type === 'income') income += parseFloat(t.amount);
-          else expenses += parseFloat(t.amount);
-        }
-      });
-      let balance = income - expenses;
-      summary = { income, expenses, balance };
-      localStorage.setItem(summaryId, JSON.stringify(summary));
+    function checkLoginStatus() {
+      const isLoggedIn = localStorage.getItem('sb_logged_in') === 'true';
+      const userId = localStorage.getItem('sb_user_id');
+      
+      if (!isLoggedIn || !userId) {
+        showLoginPrompt();
+        return false;
+      }
+      
+      return true;
     }
-    document.getElementById('summaryStats').innerHTML = `
-      <p id="summary-id"><strong>Summary ID:</strong> ${summaryId}</p>
-      <p><strong>Total Income:</strong> $${summary.income.toFixed(2)}</p>
-      <p><strong>Total Expenses:</strong> $${summary.expenses.toFixed(2)}</p>
-      <p><strong>Remaining Balance:</strong> $${summary.balance.toFixed(2)}</p>
-    `;
 
-    // === MONTHLY SUMMARY & SUGGESTION ===
+    function showLoginPrompt() {
+      document.getElementById('reportsContent').innerHTML = `
+        <div style="text-align: center; padding: 3rem;">
+          <h2>Please Log In</h2>
+          <p>You need to be logged in to view your financial reports.</p>
+          <a href="login.html" class="back-btn">Login</a>
+          <a href="dashboard.html" class="back-btn" style="background: #666;">Back to Dashboard</a>
+        </div>
+      `;
+    }
+
+    // ==================== REPORTS FUNCTIONALITY ====================
+    
+    // Cache for better performance
+    let reportsCache = {
+      data: null,
+      timestamp: 0,
+      ttl: 30000 // 30 seconds cache
+    };
+
+    // Current report data for saving
+    let currentReportData = null;
+
+    async function loadUserReports() {
+      const user_id = localStorage.getItem('sb_user_id');
+      
+      if (!user_id) {
+        showLoginPrompt();
+        return;
+      }
+
+      // Check cache first
+      const now = Date.now();
+      if (reportsCache.data && (now - reportsCache.timestamp) < reportsCache.ttl) {
+        console.log('Using cached reports data');
+        generateAllReports(reportsCache.data.transactions, reportsCache.data.goals);
+        return;
+      }
+
+      try {
+        // Load transactions from database
+        const transactionsResponse = await fetch('api/get_transactions.php?user_id=' + user_id);
+        let transactions = await transactionsResponse.json();
+        
+        // Load goals from database
+        const goalsResponse = await fetch('api/get_goals.php?user_id=' + user_id);
+        let goals = await goalsResponse.json();
+
+        // Update cache
+        reportsCache = {
+          data: { transactions, goals },
+          timestamp: now,
+          ttl: 30000
+        };
+        
+        // Store current data for potential saving
+        currentReportData = { transactions, goals };
+        
+        generateAllReports(transactions, goals);
+        saveDashboardData(transactions, goals);
+      } catch (error) {
+        console.error('Error loading reports data:', error);
+        // Fallback to localStorage
+        let transactions = JSON.parse(localStorage.getItem('sb_transactions') || '[]');
+        transactions = transactions.filter(t => t.user_id == user_id);
+        
+        let goals = JSON.parse(localStorage.getItem('goalsData') || '[]');
+        goals = goals.filter(g => g.user_id == user_id);
+        
+        currentReportData = { transactions, goals };
+        generateAllReports(transactions, goals);
+        saveDashboardData(transactions, goals);
+      }
+    }
+
+    function generateAllReports(transactions, goals) {
+      generateFinancialSummary(transactions);
+      generateTransactionsReport(transactions);
+      generateMonthlySummary(transactions);
+      generateCategoryBreakdown(transactions);
+      generateGoalsReport(goals);
+      generateMotivation(transactions, goals);
+      generateFinancialInsights(transactions, goals);
+    }
+
+    // ==================== DATABASE SAVE/LOAD FUNCTIONS ====================
+
+    async function saveCurrentReport() {
+      if (!currentReportData) {
+        alert('No report data available to save. Please refresh the reports first.');
+        return;
+      }
+
+      const saveBtn = document.getElementById('saveReportBtn');
+      const originalText = saveBtn.innerHTML;
+      
+      try {
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = '⏳ Saving...';
+
+        const user_id = localStorage.getItem('sb_user_id');
+        const user_name = localStorage.getItem('sb_user_name') || 'Smart Budget User';
+        const user_email = localStorage.getItem('sb_user_email') || (user_id + '@smartbudget.com');
+        
+        // Validate user_id exists
+        if (!user_id) {
+          throw new Error('User not logged in. Please log in again.');
+        }
+        
+        const currentMonth = getCurrentMonth();
+        
+        // Calculate financial summary for the report
+        const totalIncome = currentReportData.transactions.filter(t => t.type === 'income')
+          .reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+        const totalExpenses = currentReportData.transactions.filter(t => t.type === 'expense')
+          .reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+        const netBalance = totalIncome - totalExpenses;
+
+        const reportData = {
+          user_id: user_id,
+          user_name: user_name,
+          user_email: user_email,
+          month: currentMonth,
+          total_income: totalIncome,
+          total_expense: totalExpenses,
+          net_balance: netBalance
+        };
+
+        const response = await fetch('api/save_report.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(reportData)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          let successMessage = '✅ Report saved successfully to database!';
+          
+          // Add info if user was created
+          if (result.user_created) {
+            successMessage += ' (New user account created automatically)';
+          }
+          
+          // Show success message
+          const notice = document.getElementById('dashboardSaveNotice');
+          notice.innerHTML = successMessage;
+          notice.style.display = 'block';
+          
+          setTimeout(() => {
+            notice.style.display = 'none';
+          }, 5000);
+          
+          console.log('Report saved successfully:', result);
+        } else {
+          throw new Error(result.error || 'Failed to save report');
+        }
+
+      } catch (error) {
+        console.error('Error saving report:', error);
+        
+        // Show user-friendly error message
+        if (error.message.includes('session has expired') || error.message.includes('not logged in')) {
+          alert('Your session has expired. Please log in again.');
+          window.location.href = 'login.html';
+        } else {
+          alert('Error saving report: ' + error.message);
+        }
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '💾 Save Report';
+      }
+    }
+
+    async function loadSavedReports() {
+      const user_id = localStorage.getItem('sb_user_id');
+      if (!user_id) return;
+
+      try {
+        const response = await fetch('api/get_reports.php?user_id=' + user_id);
+        const reports = await response.json();
+
+        displaySavedReports(reports);
+        
+      } catch (error) {
+        console.error('Error loading saved reports:', error);
+        document.getElementById('savedReportsContainer').innerHTML = 
+          '<div class="loading">Error loading saved reports. Please try again.</div>';
+      }
+    }
+
+    function displaySavedReports(reports) {
+      const container = document.getElementById('savedReportsContainer');
+      const section = document.getElementById('savedReportsSection');
+
+      if (!reports || reports.length === 0) {
+        container.innerHTML = '<div class="loading">No saved reports found.</div>';
+        section.style.display = 'block';
+        return;
+      }
+
+      // Sort by creation date (newest first)
+      reports.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+      container.innerHTML = `
+        <table id="savedReportsTable">
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>Income</th>
+              <th>Expenses</th>
+              <th>Net Balance</th>
+              <th>Saved On</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${reports.map(report => `
+              <tr>
+                <td><strong>${report.month || 'N/A'}</strong></td>
+                <td style="color: #2e7d32; font-weight: bold;">${formatCurrency(report.total_income)}</td>
+                <td style="color: #d32f2f; font-weight: bold;">${formatCurrency(report.total_expense)}</td>
+                <td style="color: ${report.net_balance >= 0 ? '#2e7d32' : '#d32f2f'}; font-weight: bold;">
+                  ${formatCurrency(report.net_balance)}
+                </td>
+                <td>${formatDate(report.created_at)}</td>
+                <td>
+                  <button class="action-btn" onclick="viewReportDetails(${report.report_id})" style="font-size: 0.8rem;">
+                    View Details
+                  </button>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+        <div style="text-align: center; margin-top: 1rem; color: #666;">
+          Showing ${reports.length} saved reports
+        </div>
+      `;
+
+      section.style.display = 'block';
+    }
+
+    function viewReportDetails(reportId) {
+      alert('Report details view would be implemented here for report ID: ' + reportId);
+      // In a full implementation, this would fetch and display the full report data
+    }
+
+    function getCurrentMonth() {
+      const d = new Date();
+      const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"];
+      return monthNames[d.getMonth()] + ' ' + d.getFullYear();
+    }
+
+    // ==================== EXISTING REPORT GENERATION FUNCTIONS ====================
+
+    function generateFinancialSummary(transactions) {
+      const container = document.getElementById('financialSummary');
+      
+      const totalIncome = transactions.filter(t => t.type === 'income')
+        .reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+      const totalExpenses = transactions.filter(t => t.type === 'expense')
+        .reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+      const netBalance = totalIncome - totalExpenses;
+      const savingsRate = totalIncome > 0 ? ((netBalance / totalIncome) * 100) : 0;
+
+      container.innerHTML = `
+        <div class="summary-card income-card">
+          <div class="summary-label">Total Income</div>
+          <div class="summary-value" style="color: #2e7d32;">${formatCurrency(totalIncome)}</div>
+          <div style="font-size: 0.9rem; color: #666;">All time income</div>
+        </div>
+        <div class="summary-card expense-card">
+          <div class="summary-label">Total Expenses</div>
+          <div class="summary-value" style="color: #d32f2f;">${formatCurrency(totalExpenses)}</div>
+          <div style="font-size: 0.9rem; color: #666;">All time expenses</div>
+        </div>
+        <div class="summary-card balance-card">
+          <div class="summary-label">Net Balance</div>
+          <div class="summary-value" style="color: ${netBalance >= 0 ? '#2e7d32' : '#d32f2f'};">${formatCurrency(netBalance)}</div>
+          <div style="font-size: 0.9rem; color: #666;">Current balance</div>
+        </div>
+        <div class="summary-card goals-card">
+          <div class="summary-label">Savings Rate</div>
+          <div class="summary-value" style="color: #ff6b00;">${savingsRate.toFixed(1)}%</div>
+          <div style="font-size: 0.9rem; color: #666;">Of income saved</div>
+        </div>
+      `;
+    }
+
+    function generateTransactionsReport(transactions) {
+      const container = document.getElementById('transactionsContainer');
+      
+      if (!transactions || transactions.length === 0) {
+        container.innerHTML = '<div class="loading">No transactions found. Start by adding income or expenses!</div>';
+        return;
+      }
+
+      // Sort by date (newest first)
+      const sortedTransactions = transactions.sort((a, b) => {
+        const dateA = new Date(a.date || a.createdAt);
+        const dateB = new Date(b.date || b.createdAt);
+        return dateB - dateA;
+      });
+
+      container.innerHTML = `
+        <table id="transactionsTable">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Category</th>
+              <th>Amount</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${sortedTransactions.map(t => `
+              <tr>
+                <td>${t.date ? formatDate(t.date) : (t.createdAt ? formatDate(t.createdAt) : '-')}</td>
+                <td>
+                  <span style="color: ${t.type === 'income' ? '#2e7d32' : '#d32f2f'}; font-weight: bold;">
+                    ${t.type ? t.type.charAt(0).toUpperCase() + t.type.slice(1) : '-'}
+                  </span>
+                </td>
+                <td>${t.category || '-'}</td>
+                <td style="color: ${t.type === 'income' ? '#2e7d32' : '#d32f2f'}; font-weight: bold;">
+                  ${t.type === 'income' ? '+' : '-'}${formatCurrency(t.amount)}
+                </td>
+                <td>${t.description || t.desc || ''}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+        <div style="margin-top: 1rem; text-align: center; color: #666;">
+          Showing ${sortedTransactions.length} transactions
+        </div>
+      `;
+    }
+
+    function generateMonthlySummary(transactions) {
+      const container = document.getElementById('monthlySummaryContainer');
+
+      if (!transactions || transactions.length === 0) {
+        container.innerHTML = '<div class="loading">No data available for monthly summary.</div>';
+        return;
+      }
+
+      // Group transactions by month
+      const monthly = {};
+      transactions.forEach(t => {
+        const date = t.date || t.createdAt;
+        if (!date) return;
+        
+        const month = getMonth(date);
+        if (!monthly[month]) monthly[month] = { income: 0, expenses: 0, transactions: 0 };
+        
+        if (t.type === 'income') {
+          monthly[month].income += parseFloat(t.amount || 0);
+        } else {
+          monthly[month].expenses += parseFloat(t.amount || 0);
+        }
+        monthly[month].transactions++;
+      });
+
+      const months = Object.keys(monthly).sort((a, b) => new Date(b) - new Date(a));
+      
+      if (months.length === 0) {
+        container.innerHTML = '<div class="loading">No monthly data available.</div>';
+        return;
+      }
+
+      container.innerHTML = `
+        <table id="monthlySummaryTable">
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>Income</th>
+              <th>Expenses</th>
+              <th>Saved</th>
+              <th>Savings Rate</th>
+              <th>Transactions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${months.map(month => {
+              const vals = monthly[month];
+              const saved = vals.income - vals.expenses;
+              const savingsRate = vals.income > 0 ? ((saved / vals.income) * 100) : 0;
+              
+              return `
+                <tr>
+                  <td><strong>${month}</strong></td>
+                  <td style="color: #2e7d32; font-weight: bold;">${formatCurrency(vals.income)}</td>
+                  <td style="color: #d32f2f; font-weight: bold;">${formatCurrency(vals.expenses)}</td>
+                  <td style="color: ${saved >= 0 ? '#2e7d32' : '#d32f2f'}; font-weight: bold;">
+                    ${formatCurrency(saved)}
+                  </td>
+                  <td style="color: ${savingsRate >= 0 ? '#2e7d32' : '#d32f2f'};">
+                    ${savingsRate.toFixed(1)}%
+                  </td>
+                  <td>${vals.transactions}</td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function generateCategoryBreakdown(transactions) {
+      const container = document.getElementById('categoryContainer');
+      
+      const expenses = transactions.filter(t => t.type === 'expense');
+      
+      if (expenses.length === 0) {
+        container.innerHTML = '<div class="loading">No expense data available for category breakdown.</div>';
+        return;
+      }
+
+      // Group by category
+      const categories = {};
+      expenses.forEach(expense => {
+        const category = expense.category || 'Uncategorized';
+        if (!categories[category]) categories[category] = { total: 0, count: 0 };
+        categories[category].total += parseFloat(expense.amount || 0);
+        categories[category].count++;
+      });
+
+      const totalExpenses = expenses.reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+      const categoryArray = Object.entries(categories)
+        .map(([name, data]) => ({ name, ...data }))
+        .sort((a, b) => b.total - a.total);
+
+      container.innerHTML = `
+        <table id="categoryTable">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Amount Spent</th>
+              <th>Percentage</th>
+              <th>Transactions</th>
+              <th>Progress</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${categoryArray.map(cat => {
+              const percentage = totalExpenses > 0 ? (cat.total / totalExpenses) * 100 : 0;
+              return `
+                <tr>
+                  <td><strong>${cat.name}</strong></td>
+                  <td style="color: #d32f2f; font-weight: bold;">${formatCurrency(cat.total)}</td>
+                  <td>${percentage.toFixed(1)}%</td>
+                  <td>${cat.count}</td>
+                  <td>
+                    <div class="progress-container" style="margin: 0.5rem 0;">
+                      <div class="progress-bar" style="width: ${percentage}%"></div>
+                    </div>
+                  </td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+        <div style="text-align: center; margin-top: 1rem; color: #666;">
+          Total Expenses: ${formatCurrency(totalExpenses)} across ${categoryArray.length} categories
+        </div>
+      `;
+    }
+
+    function generateGoalsReport(goals) {
+      const container = document.getElementById('goalContainer');
+      
+      if (!goals || goals.length === 0) {
+        container.innerHTML = `
+          <div class="loading">
+            <p>No goals set yet.</p>
+            <p><a href="Savings.html" style="color: #4834d4; text-decoration: underline;">Create your first savings goal</a> to start tracking your progress!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <table id="goalTable">
+          <thead>
+            <tr>
+              <th>Goal Name</th>
+              <th>Target Amount</th>
+              <th>Saved Amount</th>
+              <th>Progress</th>
+              <th>Deadline</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${goals.map(goal => {
+              const currentAmount = parseFloat(goal.current_amount || goal.savedAmount || goal.current || 0);
+              const targetAmount = parseFloat(goal.target_amount || goal.goalAmount || goal.target);
+              const progress = targetAmount > 0 ? (currentAmount / targetAmount) * 100 : 0;
+              let status = "Pending";
+              let statusClass = "pending";
+              
+              const deadline = goal.deadline || goal.goalDate;
+              if (progress >= 100) {
+                status = "Reached";
+                statusClass = "reached";
+              } else if (deadline && new Date(deadline) < new Date() && progress < 100) {
+                status = "Failed";
+                statusClass = "failed";
+              }
+
+              const daysLeft = deadline ? Math.ceil((new Date(deadline) - new Date()) / (1000 * 60 * 60 * 24)) : null;
+              
+              return `
+                <tr>
+                  <td><strong>${goal.name || goal.goalName || 'Unnamed Goal'}</strong></td>
+                  <td>${formatCurrency(targetAmount)}</td>
+                  <td>${formatCurrency(currentAmount)}</td>
+                  <td>
+                    <div style="background: #e0e0e0; border-radius: 10px; height: 8px; margin: 4px 0;">
+                      <div style="background: ${progress >= 100 ? '#2e7d32' : progress >= 50 ? '#1976d2' : '#ff9800'}; 
+                           height: 100%; width: ${Math.min(progress, 100)}%; border-radius: 10px;"></div>
+                    </div>
+                    <small>${progress.toFixed(1)}%</small>
+                  </td>
+                  <td>${deadline ? formatDate(deadline) : 'No deadline'} 
+                    ${daysLeft > 0 ? `<br><small>(${daysLeft} days left)</small>` : ''}
+                  </td>
+                  <td><span class="status ${statusClass}">${status}</span></td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function generateMotivation(transactions, goals) {
+      const section = document.getElementById('motivationSection');
+      const textElement = document.getElementById('motivationText');
+      const detailsElement = document.getElementById('motivationDetails');
+      
+      const totalIncome = transactions.filter(t => t.type === 'income')
+        .reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+      const totalExpenses = transactions.filter(t => t.type === 'expense')
+        .reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+      const netBalance = totalIncome - totalExpenses;
+      const savingsRate = totalIncome > 0 ? ((netBalance / totalIncome) * 100) : 0;
+
+      let motivation = "";
+      let details = "";
+      
+      if (netBalance > 0) {
+        if (savingsRate > 20) {
+          motivation = "🎉 Outstanding! You're saving more than 20% of your income!";
+          details = `You've saved ${formatCurrency(netBalance)} (${savingsRate.toFixed(1)}% of income). Keep building that financial security!`;
+        } else if (savingsRate > 10) {
+          motivation = "👍 Great job! You're building good savings habits!";
+          details = `You've saved ${formatCurrency(netBalance)} (${savingsRate.toFixed(1)}% of income). Consider increasing to 20% for even better results.`;
+        } else {
+          motivation = "💪 Good start! Every bit of savings counts!";
+          details = `You've saved ${formatCurrency(netBalance)}. Try to reach 10-20% savings rate for optimal financial health.`;
+        }
+      } else {
+        motivation = "📝 Time to review your spending habits!";
+        details = `You're spending ${formatCurrency(Math.abs(netBalance))} more than you earn. Consider creating a budget to get back on track.`;
+      }
+
+      // Add goal motivation if there are active goals
+      const activeGoals = goals.filter(g => g.status === 'active' || !g.status);
+      if (activeGoals.length > 0) {
+        const totalGoalProgress = activeGoals.reduce((sum, goal) => {
+          const current = parseFloat(goal.current_amount || goal.savedAmount || goal.current || 0);
+          const target = parseFloat(goal.target_amount || goal.goalAmount || goal.target);
+          return sum + (target > 0 ? current / target : 0);
+        }, 0) / activeGoals.length * 100;
+        
+        if (totalGoalProgress > 75) {
+          motivation += " You're crushing your savings goals! 🎯";
+        } else if (totalGoalProgress > 50) {
+          motivation += " You're making solid progress on your goals! 💰";
+        }
+      }
+
+      textElement.textContent = motivation;
+      detailsElement.innerHTML = `<p>${details}</p>`;
+      section.style.display = 'block';
+    }
+
+    function generateFinancialInsights(transactions, goals) {
+      const container = document.getElementById('insightsContainer');
+      let insights = [];
+
+      const totalIncome = transactions.filter(t => t.type === 'income')
+        .reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+      const totalExpenses = transactions.filter(t => t.type === 'expense')
+        .reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+      const netBalance = totalIncome - totalExpenses;
+
+      // Basic financial health insight
+      if (netBalance > 0) {
+        insights.push(`✅ <strong>Positive Cash Flow:</strong> You're saving ${formatCurrency(netBalance)} monthly. Excellent financial discipline!`);
+      } else {
+        insights.push(`⚠️ <strong>Negative Cash Flow:</strong> You're spending ${formatCurrency(Math.abs(netBalance))} more than you earn. Consider reviewing expenses.`);
+      }
+
+      // Transaction frequency insight
+      if (transactions.length > 0) {
+        const avgTransaction = (totalIncome + totalExpenses) / transactions.length;
+        insights.push(`📊 <strong>Transaction Analysis:</strong> Average transaction amount is ${formatCurrency(avgTransaction)} across ${transactions.length} transactions.`);
+      }
+
+      // Category spending insight
+      const expenses = transactions.filter(t => t.type === 'expense');
+      if (expenses.length > 0) {
+        const categories = {};
+        expenses.forEach(expense => {
+          const category = expense.category || 'Uncategorized';
+          categories[category] = (categories[category] || 0) + parseFloat(expense.amount || 0);
+        });
+        
+        const topCategory = Object.entries(categories).sort((a, b) => b[1] - a[1])[0];
+        if (topCategory) {
+          insights.push(`🎯 <strong>Top Spending Category:</strong> ${topCategory[0]} (${formatCurrency(topCategory[1])})`);
+        }
+      }
+
+      // Goals progress insight
+      const activeGoals = goals.filter(g => g.status === 'active' || !g.status);
+      if (activeGoals.length > 0) {
+        insights.push(`🎯 <strong>Active Goals:</strong> You're working on ${activeGoals.length} savings goal${activeGoals.length !== 1 ? 's' : ''}. Stay focused!`);
+      }
+
+      if (insights.length === 0) {
+        insights.push('💫 <strong>Welcome!</strong> Start by adding your first expense, income, or savings goal to get personalized insights.');
+      }
+
+      container.innerHTML = insights.map(insight => `
+        <div class="insight-card">
+          ${insight}
+        </div>
+      `).join('');
+    }
+
+    function saveDashboardData(transactions, goals) {
+      try {
+        const user_id = localStorage.getItem('sb_user_id');
+        if (!user_id) return;
+
+        // Calculate financial summary
+        const totalIncome = transactions.filter(t => t.type === 'income')
+          .reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+        const totalExpenses = transactions.filter(t => t.type === 'expense')
+          .reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+        const netBalance = totalIncome - totalExpenses;
+        const activeGoals = goals.filter(g => g.status === 'active' || !g.status).length;
+
+        const dashboardData = {
+          summary: {
+            total_income: totalIncome,
+            total_expenses: totalExpenses,
+            net_balance: netBalance
+          },
+          transactions: transactions.slice(0, 5), // Recent transactions
+          goals: goals,
+          active_goals_count: activeGoals,
+          last_updated: new Date().toISOString()
+        };
+
+        // Save to localStorage for dashboard to access
+        localStorage.setItem('dashboard_data', JSON.stringify(dashboardData));
+        
+        // Show success notice
+        const notice = document.getElementById('dashboardSaveNotice');
+        notice.style.display = 'block';
+        
+        // Hide notice after 5 seconds
+        setTimeout(() => {
+          notice.style.display = 'none';
+        }, 5000);
+
+        console.log('Dashboard data saved:', dashboardData);
+        
+      } catch (error) {
+        console.error('Error saving dashboard data:', error);
+      }
+    }
+
+    function refreshReports() {
+      // Clear cache and reload
+      reportsCache = { data: null, timestamp: 0, ttl: 30000 };
+      currentReportData = null;
+      loadUserReports();
+    }
+
+    function exportToPDF() {
+      alert('PDF export functionality would be implemented here!');
+      // In a real implementation, this would generate and download a PDF report
+    }
+
+    // Additional UI functions
+    function exportTransactions() {
+      alert('CSV export functionality would be implemented here!');
+    }
+
+    function toggleMonthlyChart() {
+      alert('Chart toggle functionality would be implemented here!');
+    }
+
+    function toggleCategoryView() {
+      alert('Category view toggle functionality would be implemented here!');
+    }
+
+    function sortGoalsByProgress() {
+      alert('Goals sorting functionality would be implemented here!');
+    }
+
+    // Utility functions
     function getMonth(dateStr) {
       const d = new Date(dateStr);
       const monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"];
       return monthNames[d.getMonth()] + ' ' + d.getFullYear();
     }
-    // Group transactions by month
-    const monthly = {};
-    transactions.forEach(t => {
-      if (!t.date) return;
-      const month = getMonth(t.date);
-      if (!monthly[month]) monthly[month] = {income:0,expenses:0};
-      if (t.type === 'income') monthly[month].income += parseFloat(t.amount);
-      else monthly[month].expenses += parseFloat(t.amount);
-    });
-    // Render monthly summary table
-    const monthlySummaryTbody = document.querySelector('#monthlySummaryTable tbody');
-    let lastMonth = null;
-    Object.entries(monthly).forEach(([month, vals]) => {
-      const saved = vals.income - vals.expenses;
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${month}</td>
-        <td>$${vals.income.toFixed(2)}</td>
-        <td>$${vals.expenses.toFixed(2)}</td>
-        <td>$${saved.toFixed(2)}</td>
-      `;
-      monthlySummaryTbody.appendChild(row);
-      lastMonth = {month, ...vals, saved};
-    });
-    // Suggestion area logic
-    const suggestionBox = document.getElementById('suggestionBox');
-    if (lastMonth) {
-      if (lastMonth.expenses > lastMonth.income) {
-        suggestionBox.textContent = `You spent more than you earned in ${lastMonth.month}. Consider reviewing your expenses and setting stricter budgets for categories where you overspent.`;
-      } else if (lastMonth.saved > 0) {
-        suggestionBox.textContent = `Congratulations! You saved $${lastMonth.saved.toFixed(2)} in ${lastMonth.month}. Keep up the efficient money management!`;
-      } else {
-        suggestionBox.textContent = `You broke even in ${lastMonth.month}. Try to save a little next month for better financial security.`;
-      }
-    } else {
-      suggestionBox.textContent = 'No monthly data available yet.';
+
+    function formatCurrency(amount) {
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+      }).format(amount || 0);
     }
 
-    // === LOAD GOAL ===
-    const goalData = JSON.parse(localStorage.getItem("savingsGoal"));
-    const goalTbody = document.querySelector("#goalTable tbody");
+    function formatDate(dateString) {
+      if (!dateString) return '-';
+      return new Date(dateString).toLocaleDateString();
+    }
 
-    if (goalData) {
-      const progress = (goalData.savedAmount / goalData.goalAmount) * 100;
-      let status = "Pending";
-      if (progress >= 100) status = "Reached";
-      else if (new Date(goalData.goalDate) < new Date() && progress < 100) status = "Failed";
+    // Save data before page unload
+    window.addEventListener('beforeunload', function() {
+      saveAllData();
+    });
 
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${goalData.goalName}</td>
-        <td>$${goalData.goalAmount}</td>
-        <td>$${goalData.savedAmount}</td>
-        <td>${goalData.goalDate}</td>
-        <td><span class="status ${status.toLowerCase()}">${status}</span></td>
-      `;
-      goalTbody.appendChild(row);
-    } else {
-      goalTbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">No goal data available.</td></tr>`;
+    async function saveAllData() {
+      try {
+        const user_id = localStorage.getItem('sb_user_id');
+        if (!user_id) return;
+
+        // Save any pending data to database
+        const transactions = JSON.parse(localStorage.getItem('sb_transactions') || '[]');
+        const userTransactions = transactions.filter(t => t.user_id == user_id);
+        
+        if (userTransactions.length > 0) {
+          await fetch('api/save_transactions.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              user_id: user_id,
+              transactions: userTransactions
+            })
+          });
+        }
+
+        console.log('Data saved successfully before page unload');
+      } catch (error) {
+        console.error('Error saving data before unload:', error);
+      }
     }
   </script>
 </body>

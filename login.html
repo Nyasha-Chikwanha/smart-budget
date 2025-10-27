@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Smart Budget — Log in</title>
+  <title>Smart Budget — Login</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -22,23 +22,24 @@
 
   <main class="auth-page">
     <div class="container auth-inner">
+      <div class="auth-art">
+        <img src="images/login-graphic.svg" alt="login art"/>
+      </div>
       <div class="auth-card">
         <h1>Welcome back</h1>
-        <p>Log in to access your Smart Budget account.</p>
-        <form id="loginForm" method="post" action="#">
+        <p>Log in to your Smart Budget account.</p>
+        <form id="loginForm" method="post">
           <label>Email
             <input type="email" name="email" id="email" required placeholder="you@example.com">
           </label>
           <label>Password
-            <input type="password" name="password" id="password" required placeholder="Enter password">
+            <input type="password" name="password" id="password" required placeholder="Your password">
           </label>
-          <div id="loginError" style="color:#d32f2f; font-size:0.95em; display:none; margin-bottom:0.5em;"></div>
+          <div id="loginError" style="color: #d32f2f; font-size: 0.95em; display: none; margin-bottom: 0.5em; padding: 8px; background: #ffebee; border-radius: 4px;"></div>
+          <div id="loginSuccess" style="color: #2e7d32; font-size: 0.95em; display: none; margin-bottom: 0.5em; padding: 8px; background: #e8f5e9; border-radius: 4px;"></div>
           <button type="submit" class="btn btn-cta">Log in</button>
           <p class="muted">Don't have an account? <a href="signup.html">Sign up</a></p>
         </form>
-      </div>
-      <div class="auth-art">
-        <img src="images/login-graphic.svg" alt="login art"/>
       </div>
     </div>
   </main>
@@ -50,28 +51,354 @@
   </footer>
 
   <script>
-    // Simple login logic with localStorage for remembering details
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
+    // Enhanced User Data Management System
+    const UserDataManager = {
+      // Generate consistent user ID from email
+      generateUserId(email) {
+        let hash = 0;
+        for (let i = 0; i < email.length; i++) {
+          hash = ((hash << 5) - hash) + email.charCodeAt(i);
+          hash = hash & hash; // Convert to 32bit integer
+        }
+        return 'user_' + Math.abs(hash).toString(16);
+      },
+
+      // Save user session
+      saveUserSession(email, name) {
+        const userId = this.generateUserId(email);
+        
+        localStorage.setItem('sb_user_email', email);
+        localStorage.setItem('sb_user_name', name || email.split('@')[0]);
+        localStorage.setItem('sb_user_id', userId);
+        localStorage.setItem('sb_logged_in', 'true');
+        localStorage.setItem('sb_last_login', new Date().toISOString());
+        
+        console.log('User session saved:', { email, userId });
+        return userId;
+      },
+
+      // Load user's financial data from database
+      async loadUserFinancialData(userId) {
+        try {
+          console.log('Loading financial data for user:', userId);
+          
+          // Try to load from database first
+          const dbData = await this.loadFromDatabase(userId);
+          if (dbData && dbData.success) {
+            console.log('Financial data loaded from database:', dbData);
+            return dbData;
+          }
+          
+          // Fallback to localStorage
+          const localData = this.loadFromLocalStorage(userId);
+          console.log('Financial data loaded from localStorage:', localData);
+          return localData;
+          
+        } catch (error) {
+          console.error('Error loading financial data:', error);
+          return this.loadFromLocalStorage(userId);
+        }
+      },
+
+      // Load data from database APIs
+      async loadFromDatabase(userId) {
+        try {
+          console.log('Attempting to load data from database for user:', userId);
+          
+          // Load data from separate database tables
+          const [incomeResponse, expensesResponse, goalsResponse] = await Promise.all([
+            fetch(`api/get_income.php?user_id=${userId}`).catch(() => ({ ok: false })),
+            fetch(`api/get_expenses.php?user_id=${userId}`).catch(() => ({ ok: false })),
+            fetch(`api/get_goals.php?user_id=${userId}`).catch(() => ({ ok: false }))
+          ]);
+
+          let income = [];
+          let expenses = [];
+          let goals = [];
+
+          // Process income data
+          if (incomeResponse.ok) {
+            try {
+              income = await incomeResponse.json();
+              console.log('Income data loaded:', income);
+            } catch (e) {
+              console.warn('Failed to parse income data:', e);
+            }
+          }
+
+          // Process expenses data
+          if (expensesResponse.ok) {
+            try {
+              expenses = await expensesResponse.json();
+              console.log('Expenses data loaded:', expenses);
+            } catch (e) {
+              console.warn('Failed to parse expenses data:', e);
+            }
+          }
+
+          // Process goals data
+          if (goalsResponse.ok) {
+            try {
+              goals = await goalsResponse.json();
+              console.log('Goals data loaded:', goals);
+            } catch (e) {
+              console.warn('Failed to parse goals data:', e);
+            }
+          }
+
+          // Check if we have any data from database
+          const hasData = income.length > 0 || expenses.length > 0 || goals.length > 0;
+          
+          if (hasData) {
+            // Combine income and expenses for compatibility
+            const allTransactions = [
+              ...income.map(item => ({ ...item, type: 'income' })),
+              ...expenses.map(item => ({ ...item, type: 'expense' }))
+            ];
+
+            // Calculate summary
+            const summary = this.calculateSummary(income, expenses);
+
+            return {
+              success: true,
+              summary,
+              income,
+              expenses,
+              goals,
+              allTransactions,
+              source: 'database',
+              message: 'Your saved financial data has been loaded'
+            };
+          }
+
+          return null; // No data in database
+          
+        } catch (error) {
+          console.warn('Database load failed:', error);
+          return null;
+        }
+      },
+
+      // Load data from localStorage
+      loadFromLocalStorage(userId) {
+        const transactions = JSON.parse(localStorage.getItem('sb_transactions') || '[]');
+        const goals = JSON.parse(localStorage.getItem('goalsData') || '[]');
+        
+        const userTransactions = transactions.filter(t => t.user_id === userId);
+        const userGoals = goals.filter(g => g.user_id === userId);
+
+        const income = userTransactions.filter(t => t.type === 'income');
+        const expenses = userTransactions.filter(t => t.type === 'expense');
+
+        const summary = this.calculateSummary(income, expenses);
+
+        return {
+          success: true,
+          summary,
+          income,
+          expenses,
+          goals: userGoals,
+          allTransactions: userTransactions,
+          source: 'localStorage',
+          message: userTransactions.length > 0 || userGoals.length > 0 
+            ? 'Your local data has been loaded' 
+            : 'Welcome! Start by adding your first transaction or goal.'
+        };
+      },
+
+      // Calculate financial summary
+      calculateSummary(income, expenses) {
+        const totalIncome = income.reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+        const totalExpenses = expenses.reduce((sum, t) => sum + parseFloat(t.amount || 0), 0);
+        const netBalance = totalIncome - totalExpenses;
+        const savingsRate = totalIncome > 0 ? ((netBalance / totalIncome) * 100) : 0;
+
+        return {
+          total_income: totalIncome,
+          total_expenses: totalExpenses,
+          net_balance: netBalance,
+          savings_rate: savingsRate,
+          transaction_count: income.length + expenses.length
+        };
+      },
+
+      // Check if user has existing data
+      hasExistingData(userId) {
+        const transactions = JSON.parse(localStorage.getItem('sb_transactions') || '[]');
+        const goals = JSON.parse(localStorage.getItem('goalsData') || '[]');
+        
+        const hasTransactions = transactions.some(t => t.user_id === userId);
+        const hasGoals = goals.some(g => g.user_id === userId);
+        
+        return hasTransactions || hasGoals;
+      },
+
+      // Prepare data for dashboard
+      prepareDashboardData(userData) {
+        // Store data for welcome page to use
+        localStorage.setItem('last_dashboard_data', JSON.stringify(userData));
+        localStorage.setItem('last_dashboard_update', Date.now().toString());
+        
+        console.log('Dashboard data prepared:', userData);
+        return userData;
+      }
+    };
+
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
       e.preventDefault();
+      
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
       const errorDiv = document.getElementById('loginError');
+      const successDiv = document.getElementById('loginSuccess');
 
-      // Demo: Only one valid user
-      if (email === "nchikwanha7@gmail.com" && password === "M0neypenny") {
-        localStorage.setItem('sb_user_email', email);
-        window.location.href = "welcome.html";
-      } else {
-        errorDiv.textContent = "UNKNOWN USER, PLEASE REGISTER";
-        errorDiv.style.display = "block";
+      // Clear messages
+      errorDiv.style.display = "none";
+      errorDiv.textContent = "";
+      successDiv.style.display = "none";
+      successDiv.textContent = "";
+
+      // Basic validation
+      if (!email || !password) {
+        showError("Please fill in all fields");
+        return;
+      }
+
+      if (!isValidEmail(email)) {
+        showError("Please enter a valid email address");
+        return;
+      }
+
+      // Show loading
+      const button = document.querySelector('.btn-cta');
+      const originalText = button.textContent;
+      button.textContent = 'Logging in...';
+      button.disabled = true;
+
+      try {
+        console.log('Attempting login for:', email);
+        
+        // Authenticate user and load their data
+        await authenticateAndLoadUserData(email, password);
+        
+      } catch (error) {
+        console.error('Login error:', error);
+        showError(error.message || 'An unexpected error occurred. Please try again.');
+      } finally {
+        button.textContent = originalText;
+        button.disabled = false;
       }
     });
 
-    // Autofill if details are remembered
+    // Enhanced authentication function
+    async function authenticateAndLoadUserData(email, password) {
+      return new Promise(async (resolve, reject) => {
+        try {
+          // Simulate API call delay
+          setTimeout(async () => {
+            try {
+              // For demo purposes, accept any email/password combination
+              // In a real app, you would validate against your backend
+              
+              // Generate consistent user ID
+              const userId = UserDataManager.generateUserId(email);
+              
+              // Save user session
+              UserDataManager.saveUserSession(email);
+              
+              // Load user's financial data
+              console.log('Loading financial data for user:', userId);
+              const userData = await UserDataManager.loadUserFinancialData(userId);
+              
+              // Prepare data for dashboard
+              UserDataManager.prepareDashboardData(userData);
+              
+              // Show appropriate success message
+              let successMessage = 'Login successful! ';
+              if (userData.source === 'database') {
+                successMessage += 'Your saved data has been restored.';
+              } else if (UserDataManager.hasExistingData(userId)) {
+                successMessage += 'Loading your financial data...';
+              } else {
+                successMessage += 'Getting started with Smart Budget...';
+              }
+              
+              console.log('Login successful, redirecting to welcome.html');
+              showSuccess(successMessage);
+              
+              // Redirect after a brief delay to show success message
+              setTimeout(() => {
+                window.location.href = 'welcome.html';
+              }, 1500);
+              
+              resolve();
+              
+            } catch (error) {
+              console.error('Error during authentication:', error);
+              reject(new Error('Authentication failed. Please check your credentials.'));
+            }
+          }, 1000);
+        } catch (error) {
+          reject(error);
+        }
+      });
+    }
+
+    function showError(message) {
+      const errorDiv = document.getElementById('loginError');
+      errorDiv.textContent = message;
+      errorDiv.style.display = 'block';
+    }
+
+    function showSuccess(message) {
+      const successDiv = document.getElementById('loginSuccess');
+      successDiv.textContent = message;
+      successDiv.style.display = 'block';
+    }
+
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    // Check if user is already logged in
     window.addEventListener('DOMContentLoaded', function() {
-      const savedEmail = localStorage.getItem('sb_user_email');
-      if (savedEmail) {
-        document.getElementById('email').value = savedEmail;
+      if (localStorage.getItem('sb_logged_in') === 'true') {
+        console.log('User already logged in, redirecting to welcome page');
+        
+        // Pre-load user data before redirecting
+        const userId = localStorage.getItem('sb_user_id');
+        if (userId) {
+          UserDataManager.loadUserFinancialData(userId)
+            .then(userData => {
+              UserDataManager.prepareDashboardData(userData);
+            })
+            .catch(error => {
+              console.warn('Failed to pre-load user data:', error);
+            })
+            .finally(() => {
+              window.location.href = 'welcome.html';
+            });
+        } else {
+          window.location.href = 'welcome.html';
+        }
+      }
+      
+      // Check for demo accounts in URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const demoEmail = urlParams.get('demo');
+      if (demoEmail) {
+        document.getElementById('email').value = demoEmail;
+        document.getElementById('password').value = 'demo123';
+        showSuccess('Demo credentials loaded. Click "Log in" to continue.');
+      }
+    });
+
+    // Enhanced session management
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'sb_logged_in' && e.newValue === 'false') {
+        console.log('Session ended from another tab, redirecting to login');
+        window.location.href = 'login.html';
       }
     });
   </script>

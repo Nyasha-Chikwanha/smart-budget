@@ -1,10 +1,9 @@
-<!-- Auto-updated: integrated navigation and redirects -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Smart Budget — Savings Goal</title>
+  <title>Smart Budget — Savings & Expenses</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
     body {
@@ -40,13 +39,43 @@
       text-align: center;
     }
 
+    .tab-container {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #e0e0e0;
+    }
+
+    .tab {
+      padding: 0.8rem 1.5rem;
+      background: #f1f2f6;
+      border: none;
+      border-radius: 0.5rem 0.5rem 0 0;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .tab.active {
+      background: #4834d4;
+      color: white;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
     form {
       display: flex;
       flex-direction: column;
       gap: 1rem;
     }
 
-    input, textarea {
+    input, textarea, select {
       padding: 0.8rem;
       border-radius: 0.5rem;
       border: 1px solid #ccc;
@@ -108,60 +137,258 @@
     .footer-links a:hover {
       text-decoration: underline;
     }
+
+    .expense-categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .category-btn {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+      background: white;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .category-btn:hover {
+      background: #f1f2f6;
+    }
+
+    .category-btn.active {
+      background: #4834d4;
+      color: white;
+      border-color: #4834d4;
+    }
+
+    .success-message {
+      background: #e8f5e8;
+      border: 1px solid #2e7d32;
+      border-radius: 8px;
+      padding: 0.8rem;
+      margin: 1rem 0;
+      text-align: center;
+      color: #2e7d32;
+      font-weight: 500;
+      display: none;
+    }
   </style>
 </head>
 <body>
 
-  <header>💰 Smart Budget — Savings Goal</header>
+  <header>💰 Smart Budget — Savings & Expenses</header>
 
   <main>
-    <section class="goal-challenge" id="challengeBox">
-      Press the button below to receive a savings challenge that helps you build consistency!
-    </section>
-
-    <div style="text-align:center;">
-      <button onclick="generateChallenge()">🎯 Get My Challenge</button>
+    <div class="tab-container">
+      <button class="tab active" onclick="switchTab('expenses')">💸 Add Expense</button>
+      <button class="tab" onclick="switchTab('savings')">🎯 Savings Goal</button>
     </div>
 
-    <hr style="margin: 2rem 0;">
-
-    <h2>Set Your Own Saving Goal</h2>
-    <form action="Project 1/landing.html" id="goalForm">
-      <input type="text" id="goalName" placeholder="Goal Name (e.g. Buy a new phone)" required>
-      <input type="number" id="goalAmount" placeholder="Target Amount" required>
-      <input type="number" id="savedAmount" placeholder="Current Saved Amount" value="0" required>
-      <input type="date" id="goalDate" required>
-      <textarea id="goalDesc" placeholder="Description (optional)" rows="3"></textarea>
-      <button type="submit">Save Goal</button>
-    </form>
-
-    <div class="progress-container">
-      <div class="progress-bar" id="progressBar"></div>
+    <!-- Success Message -->
+    <div id="successMessage" class="success-message">
+      ✅ Goal saved successfully! It will now appear in your reports and dashboard.
     </div>
 
-    <p id="progressText" style="text-align:center; margin-top:0.5rem;">Progress: 0%</p>
+    <!-- Expenses Tab -->
+    <div id="expenses-tab" class="tab-content active">
+      <h2>Add New Expense</h2>
+      <form id="expenseForm">
+        <input type="text" id="expenseDesc" placeholder="Expense Description" required>
+        <input type="number" id="expenseAmount" placeholder="Amount" step="0.01" required>
+        <input type="date" id="expenseDate" required>
+        
+        <div>
+          <label>Category:</label>
+          <div class="expense-categories">
+            <div class="category-btn" onclick="selectCategory('Food')">🍔 Food</div>
+            <div class="category-btn" onclick="selectCategory('Transport')">🚗 Transport</div>
+            <div class="category-btn" onclick="selectCategory('Entertainment')">🎬 Entertainment</div>
+            <div class="category-btn" onclick="selectCategory('Bills')">📄 Bills</div>
+            <div class="category-btn" onclick="selectCategory('Shopping')">🛍️ Shopping</div>
+            <div class="category-btn" onclick="selectCategory('Other')">📦 Other</div>
+          </div>
+          <input type="hidden" id="expenseCategory" required>
+        </div>
 
-    <div class="footer-links">
-      <a href="welcome.html">⬅ Back to Dashboard</a>
+        <textarea id="expenseNotes" placeholder="Additional notes (optional)" rows="3"></textarea>
+        <button type="submit">Add Expense</button>
+      </form>
+
+      <div class="footer-links">
+        <a href="dashboard.html">⬅ Back to Dashboard</a>
+      </div>
+    </div>
+
+    <!-- Savings Tab -->
+    <div id="savings-tab" class="tab-content">
+      <section class="goal-challenge" id="challengeBox">
+        Press the button below to receive a savings challenge that helps you build consistency!
+      </section>
+
+      <div style="text-align:center;">
+        <button onclick="generateChallenge()">🎯 Get My Challenge</button>
+      </div>
+
+      <hr style="margin: 2rem 0;">
+
+      <h2>Set Your Savings Goal</h2>
+      <form id="goalForm">
+        <input type="text" id="goalName" placeholder="Goal Name (e.g. Buy a new phone)" required>
+        <input type="number" id="goalAmount" placeholder="Target Amount" required>
+        <input type="number" id="savedAmount" placeholder="Current Saved Amount" value="0" required>
+        <input type="date" id="goalDate" required>
+        <textarea id="goalDesc" placeholder="Description (optional)" rows="3"></textarea>
+        <button type="submit">Save Goal</button>
+      </form>
+
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <p id="progressText" style="text-align:center; margin-top:0.5rem;">Progress: 0%</p>
+
+      <div class="footer-links">
+        <a href="dashboard.html">⬅ Back to Dashboard</a>
+      </div>
     </div>
   </main>
 
   <script>
+    // Tab switching functionality
+    function switchTab(tabName) {
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+
+      // Show selected tab
+      document.getElementById(tabName + '-tab').classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    // Category selection for expenses
+    function selectCategory(category) {
+      document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      document.getElementById('expenseCategory').value = category;
+    }
+
+    // Expense form handling
+    document.getElementById("expenseForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      
+      const user_id = localStorage.getItem('sb_user_id');
+      if (!user_id) {
+        alert('Please log in to add expenses');
+        window.location.href = 'login.html';
+        return;
+      }
+
+      const expense = {
+        user_id: user_id,
+        description: document.getElementById("expenseDesc").value,
+        amount: parseFloat(document.getElementById("expenseAmount").value),
+        date: document.getElementById("expenseDate").value,
+        category: document.getElementById("expenseCategory").value,
+        notes: document.getElementById("expenseNotes").value,
+        type: 'expense',
+        createdAt: new Date().toISOString()
+      };
+
+      // Save to localStorage
+      let expenses = JSON.parse(localStorage.getItem('sb_transactions') || '[]');
+      expenses.push(expense);
+      localStorage.setItem('sb_transactions', JSON.stringify(expenses));
+
+      alert('✅ Expense added successfully!');
+      
+      // Reset form
+      document.getElementById("expenseForm").reset();
+      document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+    });
+
+    // Savings goal functionality (enhanced for dashboard integration)
+    function getLatestIncome() {
+      const transactions = JSON.parse(localStorage.getItem('sb_transactions') || '[]');
+      const user_id = localStorage.getItem('sb_user_id');
+      const userTransactions = transactions.filter(t => t.user_id === user_id && t.type === 'income');
+      
+      if (userTransactions.length > 0) {
+        const latestIncome = userTransactions[userTransactions.length - 1];
+        return parseFloat(latestIncome.amount) || 0;
+      }
+      
+      return 0;
+    }
+
+    function getFutureDate(daysFromNow) {
+      const futureDate = new Date();
+      futureDate.setDate(futureDate.getDate() + daysFromNow);
+      return futureDate.toISOString().split('T')[0];
+    }
+
     function generateChallenge() {
       const challenges = [
         "Save $5 every day this week — consistency builds wealth!",
-        "Avoid eating out for 5 days and save what you’d spend.",
-        "Transfer $20 into your savings today and don’t touch it!",
+        "Avoid eating out for 5 days and save what you'd spend.",
+        "Transfer $20 into your savings today and don't touch it!",
         "Skip one luxury purchase this week and save the money.",
         "Put away 10% of everything you earn this week.",
         "Challenge: No spending on non-essentials for 3 days."
       ];
       const randomChallenge = challenges[Math.floor(Math.random() * challenges.length)];
       document.getElementById("challengeBox").textContent = randomChallenge;
+      
+      // Auto-fill the challenge into the goal name field
+      document.getElementById("goalName").value = randomChallenge;
+      
+      // Auto-set target amount to 30% of latest income
+      const latestIncome = getLatestIncome();
+      let targetAmount = 100; // Default value
+      
+      if (latestIncome > 0) {
+        targetAmount = latestIncome * 0.3;
+        document.getElementById("goalAmount").value = targetAmount.toFixed(2);
+      } else {
+        document.getElementById("goalAmount").value = "100";
+      }
+      
+      // Auto-set goal date to 30 days from today
+      const futureDate = getFutureDate(30);
+      document.getElementById("goalDate").value = futureDate;
+      
+      // Auto-add description with challenge details
+      const description = `Challenge: ${randomChallenge}\n\n` +
+                         `Target: $${targetAmount.toFixed(2)} (30% of latest income)\n` +
+                         `Income used for calculation: $${latestIncome.toFixed(2)}\n` +
+                         `Target Date: ${new Date(futureDate).toLocaleDateString()}\n` +
+                         `Generated on: ${new Date().toLocaleDateString()}`;
+      
+      document.getElementById("goalDesc").value = description;
     }
 
-    document.getElementById("goalForm").addEventListener("submit", function(e) {
+    // Enhanced goal saving with dashboard integration
+    document.getElementById("goalForm").addEventListener("submit", async function(e) {
       e.preventDefault();
+      
+      const user_id = localStorage.getItem('sb_user_id');
+      if (!user_id) {
+        alert('Please log in to save goals');
+        window.location.href = 'login.html';
+        return;
+      }
+
       const goalName = document.getElementById("goalName").value;
       const goalAmount = parseFloat(document.getElementById("goalAmount").value);
       const savedAmount = parseFloat(document.getElementById("savedAmount").value);
@@ -172,28 +399,175 @@
       document.getElementById("progressBar").style.width = progress + "%";
       document.getElementById("progressText").textContent = `Progress: ${progress.toFixed(1)}%`;
 
+      // Create goal data with enhanced structure for reports and dashboard
+      const goalData = { 
+        user_id: user_id,
+        name: goalName,
+        goalName: goalName, // Keep for backward compatibility
+        target_amount: goalAmount,
+        goalAmount: goalAmount, // Keep for backward compatibility
+        current_amount: savedAmount,
+        savedAmount: savedAmount, // Keep for backward compatibility
+        deadline: goalDate,
+        goalDate: goalDate, // Keep for backward compatibility
+        description: desc,
+        desc: desc, // Keep for backward compatibility
+        status: savedAmount >= goalAmount ? 'completed' : 'active',
+        progress: progress,
+        created_at: new Date().toISOString(),
+        createdAt: new Date().toISOString() // Keep for backward compatibility
+      };
+      
       // Save to localStorage
-      const goalData = { goalName, goalAmount, savedAmount, goalDate, desc };
-      localStorage.setItem("savingsGoal", JSON.stringify(goalData));
+      let goals = JSON.parse(localStorage.getItem('goalsData') || '[]');
+      goals.push(goalData);
+      localStorage.setItem("goalsData", JSON.stringify(goals));
 
-      alert("🎯 Goal saved successfully!");
+      // Save to database via API
+      try {
+        await saveGoalToDatabase(goalData);
+        
+        // Update dashboard data for immediate reflection
+        updateDashboardWithGoals();
+        
+        // Show success message
+        showSuccessMessage();
+        
+      } catch (error) {
+        console.error('Error saving goal to database:', error);
+        // Still show success since it's saved to localStorage
+        showSuccessMessage();
+      }
     });
+
+    // Save goal to database
+    async function saveGoalToDatabase(goalData) {
+      const user_id = localStorage.getItem('sb_user_id');
+      if (!user_id) return;
+
+      try {
+        // Get existing goals for this user
+        const goalsResponse = await fetch('api/get_goals.php?user_id=' + user_id);
+        let existingGoals = await goalsResponse.json();
+        
+        // Add new goal to existing goals
+        existingGoals.push(goalData);
+        
+        // Save all goals back to database
+        const saveResponse = await fetch('api/save_goals.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            user_id: user_id,
+            goals: existingGoals
+          })
+        });
+        
+        const result = await saveResponse.json();
+        console.log('Goal saved to database:', result);
+        return result;
+      } catch (error) {
+        console.error('Error saving goal to database:', error);
+        throw error;
+      }
+    }
+
+    // Update dashboard data with goals information
+    function updateDashboardWithGoals() {
+      try {
+        const user_id = localStorage.getItem('sb_user_id');
+        if (!user_id) return;
+
+        // Get current goals
+        const goals = JSON.parse(localStorage.getItem('goalsData') || '[]');
+        const userGoals = goals.filter(g => g.user_id === user_id);
+        
+        // Get current dashboard data or create new
+        let dashboardData = JSON.parse(localStorage.getItem('dashboard_data') || '{}');
+        
+        // Update goals information in dashboard data
+        dashboardData.goals = userGoals;
+        dashboardData.active_goals_count = userGoals.filter(g => 
+          g.status === 'active' || !g.status
+        ).length;
+        dashboardData.last_updated = new Date().toISOString();
+        
+        // Save updated dashboard data
+        localStorage.setItem('dashboard_data', JSON.stringify(dashboardData));
+        
+        console.log('Dashboard updated with goals data');
+        
+      } catch (error) {
+        console.error('Error updating dashboard with goals:', error);
+      }
+    }
+
+    // Show success message
+    function showSuccessMessage() {
+      const successMessage = document.getElementById('successMessage');
+      successMessage.style.display = 'block';
+      
+      // Hide message after 5 seconds
+      setTimeout(() => {
+        successMessage.style.display = 'none';
+      }, 5000);
+    }
 
     // Load saved goal (if any)
     window.addEventListener("DOMContentLoaded", () => {
-      const savedGoal = JSON.parse(localStorage.getItem("savingsGoal"));
-      if (savedGoal) {
-        document.getElementById("goalName").value = savedGoal.goalName;
-        document.getElementById("goalAmount").value = savedGoal.goalAmount;
-        document.getElementById("savedAmount").value = savedGoal.savedAmount;
-        document.getElementById("goalDate").value = savedGoal.goalDate;
-        document.getElementById("goalDesc").value = savedGoal.desc;
-        const progress = Math.min((savedGoal.savedAmount / savedGoal.goalAmount) * 100, 100);
-        document.getElementById("progressBar").style.width = progress + "%";
-        document.getElementById("progressText").textContent = `Progress: ${progress.toFixed(1)}%`;
+      const user_id = localStorage.getItem('sb_user_id');
+      if (user_id) {
+        const goals = JSON.parse(localStorage.getItem('goalsData') || '[]');
+        const userGoals = goals.filter(g => g.user_id === user_id);
+        
+        if (userGoals.length > 0) {
+          const savedGoal = userGoals[userGoals.length - 1]; // Get most recent goal
+          document.getElementById("goalName").value = savedGoal.goalName || savedGoal.name;
+          document.getElementById("goalAmount").value = savedGoal.goalAmount || savedGoal.target_amount;
+          document.getElementById("savedAmount").value = savedGoal.savedAmount || savedGoal.current_amount;
+          document.getElementById("goalDate").value = savedGoal.goalDate || savedGoal.deadline;
+          document.getElementById("goalDesc").value = savedGoal.desc || savedGoal.description;
+          const progress = Math.min(((savedGoal.savedAmount || savedGoal.current_amount) / (savedGoal.goalAmount || savedGoal.target_amount)) * 100, 100);
+          document.getElementById("progressBar").style.width = progress + "%";
+          document.getElementById("progressText").textContent = `Progress: ${progress.toFixed(1)}%`;
+        }
       }
     });
-  </script>
 
+    // Save data before page unload
+    window.addEventListener('beforeunload', function() {
+      saveAllData();
+    });
+
+    async function saveAllData() {
+      try {
+        const user_id = localStorage.getItem('sb_user_id');
+        if (!user_id) return;
+
+        // Save any pending goals data to database
+        const goals = JSON.parse(localStorage.getItem('goalsData') || '[]');
+        const userGoals = goals.filter(g => g.user_id == user_id);
+        
+        if (userGoals.length > 0) {
+          await fetch('api/save_goals.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              user_id: user_id,
+              goals: userGoals
+            })
+          });
+        }
+
+        console.log('Goals data saved successfully');
+      } catch (error) {
+        console.error('Error saving goals data:', error);
+      }
+    }
+  </script>
 </body>
 </html>

@@ -36,16 +36,9 @@
     }
   </style>
   <script>
-    // simple splash -> welcome after 2.2s (or skip if already logged in)
+    // ALWAYS redirect to landing.html after 2.2 seconds
     document.addEventListener('DOMContentLoaded', () => {
-      try {
-        const current = localStorage.getItem('currentUser');
-        if (current) {
-          window.location.href = 'dashboard.html';
-          return;
-        }
-      } catch(e){}
-      setTimeout(()=> location.href='welcome.html', 2200);
+      setTimeout(() => location.href = 'landing.html', 2200);
     });
   </script>
 </head>

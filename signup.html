@@ -55,7 +55,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
   <script>
     document.getElementById('signupForm').addEventListener('submit', async function(e) {
       e.preventDefault();
@@ -65,32 +64,80 @@
       const confirm = document.getElementById('confirmPassword').value;
       const errorDiv = document.getElementById('passwordError');
 
+      // Clear previous errors
+      errorDiv.style.display = "none";
+      errorDiv.textContent = "";
+
+      // Validation
       if (password !== confirm) {
         errorDiv.textContent = "Passwords do not match.";
         errorDiv.style.display = "block";
         return;
-      } else {
-        errorDiv.style.display = "none";
       }
 
-      // Send data to backend API for SQL insertion
-      try {
-        const res = await fetch('/api/signup', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ fullname, email, password })
-        });
-        const data = await res.json();
-        if (data.success) {
-          alert("Registration successful! You can now log in.");
-          window.location.href = "login.html";
-        } else {
-          errorDiv.textContent = data.message || "Signup failed.";
-          errorDiv.style.display = "block";
-        }
-      } catch (err) {
-        errorDiv.textContent = "Server error. Please try again later.";
+      if (password.length < 6) {
+        errorDiv.textContent = "Password must be at least 6 characters long.";
         errorDiv.style.display = "block";
+        return;
+      }
+
+      // Show loading state
+      const submitBtn = document.querySelector('.btn-cta');
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Signing up...';
+      submitBtn.disabled = true;
+
+      try {
+        console.log('Sending request to server...');
+        
+        const response = await fetch('signup.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: `fullname=${encodeURIComponent(fullname)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+        });
+
+        console.log('Response status:', response.status);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Response data:', data);
+
+        if (data.success) {
+          // Store user data in localStorage to automatically log them in
+          const userData = {
+            id: data.user_id,
+            name: fullname,
+            email: email,
+            loggedIn: true
+          };
+          
+          localStorage.setItem('currentUser', JSON.stringify(userData));
+          localStorage.setItem('sb_user_id', data.user_id);
+          localStorage.setItem('sb_user_name', fullname);
+          localStorage.setItem('sb_user_email', email);
+          
+          console.log('User registered and logged in automatically:', userData);
+          
+          // Redirect to dashboard instead of login page
+          window.location.href = 'dashboard.html';
+          
+        } else {
+          errorDiv.textContent = data.message || 'Registration failed. Please try again.';
+          errorDiv.style.display = 'block';
+        }
+      } catch (error) {
+        console.error('Full error:', error);
+        errorDiv.textContent = 'Cannot connect to server. Please make sure XAMPP is running and try again. Error: ' + error.message;
+        errorDiv.style.display = 'block';
+      } finally {
+        // Restore button state
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
       }
     });
   </script>
